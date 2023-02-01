@@ -4,10 +4,8 @@
 #define GREEN	 RGB(0,255,0)
 #define BLUE	 RGB(0,0,255)
 
-#define WIN_WIDTH		 1280
-#define WIN_HEIGHT		 720
-#define CENTER_X		 640
-#define CENTER_Y		 360
+#define WIN_WIDTH		512
+#define WIN_HEIGHT		480
 
 #define PI				 3.141592
 
@@ -29,6 +27,8 @@
 #define ADD_PS(k) ShaderManager::GetInstance()->AddPS(k)
 
 #define EFFECT EffectManager::GetInstance()
+
+#define CAMERA Camera::GetInstance()
 
 #define SOUND Audio::GetInstance()
 

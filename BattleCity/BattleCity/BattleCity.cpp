@@ -46,24 +46,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
 
     Device::Create(hWnd);
+
+    StateManager::Create();
     Timer::Create();
     Keyboard::Create();
-    Audio::Create();
-    ShaderManager::Create();
-    StateManager::Create();
     SRVManager::Create();
+    ShaderManager::Create();
+    Camera::Create();
     EffectManager::Create();
+    Audio::Create();
     SceneManager::Create();
 
     shared_ptr<Program> program = make_shared<Program>();
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (msg.message != WM_QUIT)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
         }
         else
         {
@@ -73,13 +78,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     SceneManager::Delete();
-    EffectManager::Delete();
-    SRVManager::Delete();
-    StateManager::Delete();
-    ShaderManager::Delete();
     Audio::Delete();
+    EffectManager::Delete();
+    Camera::Delete();
+    ShaderManager::Delete();
+    SRVManager::Delete();
     Keyboard::Delete();
     Timer::Delete();
+    StateManager::Delete();
+
     Device::Delete();
 
     return (int) msg.wParam;
@@ -127,7 +134,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT rc = { 0,0, 1280, 720 };
+   RECT rc = { 0,0, 512, 480 };
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
    hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -187,7 +194,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_MOUSEMOVE:
         {
             mousePos.x = static_cast<float>(LOWORD(lParam));
-            mousePos.y = 720 - static_cast<float>(HIWORD(lParam));
+            mousePos.y = 480 - static_cast<float>(HIWORD(lParam));
         }
         break;
     case WM_DESTROY:

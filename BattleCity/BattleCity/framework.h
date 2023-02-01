@@ -73,6 +73,9 @@ using namespace DirectX;
 #include "Framework/Math/Collider.h"
 #include "Framework/Math/CircleCollider.h"
 
+// Camera
+#include "Framework/Camera/Camera.h"
+
 // Texture
 #include "Framework/Texture/SRV.h"
 #include "Framework/Texture/SamplerState.h"

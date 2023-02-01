@@ -14,8 +14,6 @@ Quad::Quad(wstring file)
 
 	_vs = ADD_VS(L"Shaders/Texture/TextureVertexShader.hlsl");
 	_ps = ADD_PS(L"Shaders/Texture/TexturePixelShader.hlsl");
-
-	_leftRightBuffer = make_shared<LeftRightBuffer>();
 }
 
 Quad::Quad(wstring file, Vector2 size)
@@ -29,10 +27,8 @@ Quad::Quad(wstring file, Vector2 size)
 	_vBuffer = make_shared<VertexBuffer>(_vertices.data(), sizeof(Vertex_UV), _vertices.size());
 	_indexBuffer = make_shared<IndexBuffer>(_indices.data(), _indices.size());
 
-	_vs = make_shared<VertexShader>(L"Shaders/Texture/TextureVertexShader.hlsl");
-	_ps = make_shared<PixelShader>(L"Shaders/Texture/TexturePixelShader.hlsl");
-
-	_leftRightBuffer = make_shared<LeftRightBuffer>();
+	_vs = ADD_VS(L"Shaders/Texture/TextureVertexShader.hlsl");
+	_ps = ADD_PS(L"Shaders/Texture/TexturePixelShader.hlsl");
 }
 
 Quad::~Quad()
@@ -55,18 +51,11 @@ void Quad::Render()
 
 	_srv->Set(0);
 	SAMPLER->Set(0);
-	_leftRightBuffer->SetPSBuffer(0);
 
 	_vs->Set();
 	_ps->Set();
 
 	DC->DrawIndexed(_indices.size(), 0, 0);
-}
-
-void Quad::SetLeftRight_leftRightBuffer(int leftRight)
-{
-	leftRight %= 2;
-	_leftRightBuffer->_data.leftRight = leftRight;
 }
 
 void Quad::CreateVertricesAndIndices()

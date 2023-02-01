@@ -70,8 +70,8 @@ void Device::CreateDoubleBuffer()
     _deviceContext->OMSetRenderTargets(1, _renderTargetView.GetAddressOf(), nullptr);
 
     D3D11_VIEWPORT vp;
-    vp.Width = 1280;
-    vp.Height = 720;
+    vp.Width = 512;
+    vp.Height = 480;
     vp.MinDepth = 0.0f;
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;

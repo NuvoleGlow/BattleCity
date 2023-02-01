@@ -1,10 +1,16 @@
 #include "framework.h"
 #include "SceneManager.h"
 
+#include "BattleCityScenes/TestScene.h"
+
 SceneManager* SceneManager::_instance = nullptr;
 
 SceneManager::SceneManager()
 {
+	shared_ptr<Scene> test = make_shared<TestScene>();
+	_sceneTable["Test"] = test;
+
+	_curScene = test;
 }
 
 SceneManager::~SceneManager()

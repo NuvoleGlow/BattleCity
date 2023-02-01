@@ -10,7 +10,7 @@ Sprite::Sprite(wstring file, Vector2 size)
 	_ps = ADD_PS(L"Shaders/PixelShaders/ActionPixelShader.hlsl");
 }
 
-Sprite::Sprite(wstring file, Vector2 maxFrame, Vector2 size)
+Sprite::Sprite(wstring file, Vector2 size, Vector2 maxFrame)
 	: Quad(file, size)
 {
 	_actionBuffer = make_shared<ActionBuffer>();

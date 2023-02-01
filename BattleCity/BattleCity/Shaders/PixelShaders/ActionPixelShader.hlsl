@@ -3,8 +3,7 @@ cbuffer Frame : register(b0)
 	float2 startPos;
 	float2 imageSize;
 	float2 size;
-	int leftRight;
-	int padding;
+	float2 padding;
 }
 
 Texture2D map : register(t0);
@@ -19,7 +18,7 @@ struct PixelInput
 float4 PS(PixelInput input) : SV_TARGET
 {
 	float2 spriteUV;
-	spriteUV.x = abs(input.uv.x - leftRight) * (size.x / imageSize.x) + (startPos.x / imageSize.x);
+	spriteUV.x = abs(input.uv.x) * (size.x / imageSize.x) + (startPos.x / imageSize.x);
 	spriteUV.y = input.uv.y * (size.y / imageSize.y) + (startPos.y / imageSize.y);
 
 	float4 result = map.Sample(samp, spriteUV);

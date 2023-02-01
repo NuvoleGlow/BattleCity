@@ -159,6 +159,24 @@
     <ClInclude Include="Object\GameObject\HeadQuarter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObject\Tank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BattleCityScenes\TestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Camera\Camera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject\BrickWall.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject\Frame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject\Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BattleCity.cpp">
@@ -266,6 +284,24 @@
     <ClCompile Include="Object\GameObject\HeadQuarter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\GameObject\Tank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BattleCityScenes\TestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Camera\Camera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject\BrickWall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject\Frame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject\Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BattleCity.rc">
@@ -277,6 +313,24 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="BattleCity.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\HeadQuarter.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\Brick.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\TestTank.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\Field.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\Frame.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\Bullet.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
@@ -296,5 +350,7 @@
     <FxCompile Include="Shaders\Texture\TextureVertexShader.hlsl" />
     <FxCompile Include="Shaders\PixelShaders\ActionPixelShader.hlsl" />
     <FxCompile Include="Shaders\PixelShaders\ButtonPixelShader.hlsl" />
+    <FxCompile Include="Shaders\Instance\InstanceVertexShader.hlsl" />
+    <FxCompile Include="Shaders\Instance\InstancePixelShader.hlsl" />
   </ItemGroup>
 </Project>

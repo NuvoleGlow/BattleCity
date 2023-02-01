@@ -147,6 +147,7 @@
     <ClInclude Include="BattleCity.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Framework\Animation\Action.h" />
+    <ClInclude Include="Framework\Camera\Camera.h" />
     <ClInclude Include="Framework\Device\Device.h" />
     <ClInclude Include="Framework\Math\CircleCollider.h" />
     <ClInclude Include="Framework\Math\Collider.h" />
@@ -184,10 +185,15 @@
     <ClInclude Include="Object\BasicObject\EffectManager.h" />
     <ClInclude Include="Object\BasicObject\Quad.h" />
     <ClInclude Include="Object\BasicObject\Sprite.h" />
+    <ClInclude Include="Object\GameObject\BrickWall.h" />
+    <ClInclude Include="Object\GameObject\Bullet.h" />
+    <ClInclude Include="Object\GameObject\Frame.h" />
     <ClInclude Include="Object\GameObject\HeadQuarter.h" />
+    <ClInclude Include="Object\GameObject\Tank.h" />
     <ClInclude Include="Object\UserInterface\Button.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\BattleCityScenes\TestScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="targetver.h" />
@@ -201,6 +207,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Framework\Animation\Action.cpp" />
+    <ClCompile Include="Framework\Camera\Camera.cpp" />
     <ClCompile Include="Framework\Device\Device.cpp" />
     <ClCompile Include="Framework\Math\CircleCollider.cpp" />
     <ClCompile Include="Framework\Math\Collider.cpp" />
@@ -228,9 +235,14 @@
     <ClCompile Include="Object\BasicObject\EffectManager.cpp" />
     <ClCompile Include="Object\BasicObject\Quad.cpp" />
     <ClCompile Include="Object\BasicObject\Sprite.cpp" />
+    <ClCompile Include="Object\GameObject\BrickWall.cpp" />
+    <ClCompile Include="Object\GameObject\Bullet.cpp" />
+    <ClCompile Include="Object\GameObject\Frame.cpp" />
     <ClCompile Include="Object\GameObject\HeadQuarter.cpp" />
+    <ClCompile Include="Object\GameObject\Tank.cpp" />
     <ClCompile Include="Object\UserInterface\Button.cpp" />
     <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Scene\BattleCityScenes\TestScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
   </ItemGroup>
@@ -239,6 +251,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="BattleCity.ico" />
+    <Image Include="Resource\Texture\Brick.png" />
+    <Image Include="Resource\Texture\Bullet.png" />
+    <Image Include="Resource\Texture\Field.png" />
+    <Image Include="Resource\Texture\Frame.png" />
+    <Image Include="Resource\Texture\HeadQuarter.png" />
+    <Image Include="Resource\Texture\TestTank.png" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +283,22 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shaders\Collider\ColliderVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shaders\Instance\InstancePixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shaders\Instance\InstanceVertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
