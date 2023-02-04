@@ -40,6 +40,13 @@
 #include "Library/FMOD/inc/fmod.hpp"
 #pragma comment(lib, "Library/FMOD/fmod_vc.lib")
 
+// DirectWrite
+#include <d2d1_1.h>
+#include <dwrite.h>
+
+#pragma comment(lib,"d2d1.lib")
+#pragma comment(lib,"dwrite.lib")
+
 using namespace std;
 using namespace DirectX;
 
@@ -54,6 +61,7 @@ using namespace DirectX;
 #include "Framework/Utility/Audio.h"
 #include "Framework/Utility/BinaryWriter.h"
 #include "Framework/Utility/BinaryReader.h"
+#include "Framework/Utility/DirectWrite.h"
 
 // Render
 #include "Framework/Render/VertexLayOut.h"

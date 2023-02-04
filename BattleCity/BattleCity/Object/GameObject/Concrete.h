@@ -2,16 +2,17 @@
 
 class Bullet;
 
-class HeadQuarter
+class Concrete
 {
 public:
-	HeadQuarter();
-	~HeadQuarter();
+	Concrete();
+	~Concrete();
 
 	void Update();
 	void Render();
 
 	shared_ptr<Quad> GetQuad() { return _quad; }
+	shared_ptr<Collider> GetCollider() { return _collider; }
 
 	bool IsCollision_Bullet(shared_ptr<Bullet> bullet);
 
@@ -20,5 +21,5 @@ public:
 private:
 	shared_ptr<Quad> _quad;
 	shared_ptr<Collider> _collider;
-};
 
+};

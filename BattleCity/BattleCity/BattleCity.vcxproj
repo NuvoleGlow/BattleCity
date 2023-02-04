@@ -171,6 +171,7 @@
     <ClInclude Include="Framework\Utility\Audio.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
     <ClInclude Include="Framework\Utility\BinaryWriter.h" />
+    <ClInclude Include="Framework\Utility\DirectWrite.h" />
     <ClInclude Include="Framework\Utility\Keyboard.h" />
     <ClInclude Include="Framework\Utility\Timer.h" />
     <ClInclude Include="Library\FMOD\inc\fmod.h" />
@@ -185,14 +186,16 @@
     <ClInclude Include="Object\BasicObject\EffectManager.h" />
     <ClInclude Include="Object\BasicObject\Quad.h" />
     <ClInclude Include="Object\BasicObject\Sprite.h" />
-    <ClInclude Include="Object\GameObject\BrickWall.h" />
+    <ClInclude Include="Object\GameObject\Brick.h" />
     <ClInclude Include="Object\GameObject\Bullet.h" />
+    <ClInclude Include="Object\GameObject\Concrete.h" />
     <ClInclude Include="Object\GameObject\Frame.h" />
     <ClInclude Include="Object\GameObject\HeadQuarter.h" />
-    <ClInclude Include="Object\GameObject\Tank.h" />
+    <ClInclude Include="Object\GameObject\PlayerTank.h" />
     <ClInclude Include="Object\UserInterface\Button.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\BattleCityScenes\Stage1.h" />
     <ClInclude Include="Scene\BattleCityScenes\TestScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -229,19 +232,22 @@
     <ClCompile Include="Framework\Utility\Audio.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
     <ClCompile Include="Framework\Utility\BinaryWriter.cpp" />
+    <ClCompile Include="Framework\Utility\DirectWrite.cpp" />
     <ClCompile Include="Framework\Utility\Keyboard.cpp" />
     <ClCompile Include="Framework\Utility\Timer.cpp" />
     <ClCompile Include="Object\BasicObject\Effect.cpp" />
     <ClCompile Include="Object\BasicObject\EffectManager.cpp" />
     <ClCompile Include="Object\BasicObject\Quad.cpp" />
     <ClCompile Include="Object\BasicObject\Sprite.cpp" />
-    <ClCompile Include="Object\GameObject\BrickWall.cpp" />
+    <ClCompile Include="Object\GameObject\Brick.cpp" />
     <ClCompile Include="Object\GameObject\Bullet.cpp" />
+    <ClCompile Include="Object\GameObject\Concrete.cpp" />
     <ClCompile Include="Object\GameObject\Frame.cpp" />
     <ClCompile Include="Object\GameObject\HeadQuarter.cpp" />
-    <ClCompile Include="Object\GameObject\Tank.cpp" />
+    <ClCompile Include="Object\GameObject\PlayerTank.cpp" />
     <ClCompile Include="Object\UserInterface\Button.cpp" />
     <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Scene\BattleCityScenes\Stage1.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\TestScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -253,10 +259,11 @@
     <Image Include="BattleCity.ico" />
     <Image Include="Resource\Texture\Brick.png" />
     <Image Include="Resource\Texture\Bullet.png" />
+    <Image Include="Resource\Texture\Concrete.png" />
     <Image Include="Resource\Texture\Field.png" />
     <Image Include="Resource\Texture\Frame.png" />
     <Image Include="Resource\Texture\HeadQuarter.png" />
-    <Image Include="Resource\Texture\TestTank.png" />
+    <Image Include="Resource\Texture\PlayerTank.png" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +274,8 @@
     <None Include="Library\FMOD\inc\fmod.cs" />
     <None Include="Library\FMOD\inc\fmod_dsp.cs" />
     <None Include="Library\FMOD\inc\fmod_errors.cs" />
+    <None Include="Save\Stage1_B.map" />
+    <None Include="Save\Stage1_C.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">

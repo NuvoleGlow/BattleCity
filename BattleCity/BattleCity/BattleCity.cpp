@@ -56,6 +56,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     EffectManager::Create();
     Audio::Create();
     SceneManager::Create();
+    DirectWrite::Create();
 
     shared_ptr<Program> program = make_shared<Program>();
 
@@ -77,6 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
+    DirectWrite::Delete();
     SceneManager::Delete();
     Audio::Delete();
     EffectManager::Delete();

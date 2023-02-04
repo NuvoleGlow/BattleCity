@@ -159,22 +159,31 @@
     <ClInclude Include="Object\GameObject\HeadQuarter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObject\Tank.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Scene\BattleCityScenes\TestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Camera\Camera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\GameObject\BrickWall.h">
+    <ClInclude Include="Object\GameObject\Brick.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\GameObject\Frame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\GameObject\Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Utility\DirectWrite.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BattleCityScenes\Stage1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject\PlayerTank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject\Concrete.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -284,22 +293,31 @@
     <ClCompile Include="Object\GameObject\HeadQuarter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObject\Tank.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\BattleCityScenes\TestScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Camera\Camera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\GameObject\BrickWall.cpp">
+    <ClCompile Include="Object\GameObject\Brick.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\GameObject\Frame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\GameObject\Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Utility\DirectWrite.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BattleCityScenes\Stage1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject\PlayerTank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject\Concrete.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -321,7 +339,7 @@
     <Image Include="Resource\Texture\Brick.png">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resource\Texture\TestTank.png">
+    <Image Include="Resource\Texture\PlayerTank.png">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resource\Texture\Field.png">
@@ -333,6 +351,9 @@
     <Image Include="Resource\Texture\Bullet.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Texture\Concrete.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Library\FMOD\fmod_vc.lib" />
@@ -342,6 +363,8 @@
     <None Include="Library\FMOD\inc\fmod_dsp.cs" />
     <None Include="Library\FMOD\inc\fmod_errors.cs" />
     <None Include="fmod.dll" />
+    <None Include="Save\Stage1_B.map" />
+    <None Include="Save\Stage1_C.map" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\Collider\ColliderPixelShader.hlsl" />

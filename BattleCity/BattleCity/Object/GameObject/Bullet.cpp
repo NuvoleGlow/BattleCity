@@ -1,4 +1,7 @@
 #include "framework.h"
+
+#include "Brick.h"
+
 #include "Bullet.h"
 
 Bullet::Bullet()
@@ -15,12 +18,20 @@ Bullet::~Bullet()
 
 void Bullet::Update()
 {
+	if (_quad->GetTransform()->GetWorldPos().x < 35.0f ||
+		_quad->GetTransform()->GetWorldPos().x > 445.0f)
+	{
+		isActive = false;
+	}
 
+	if (_quad->GetTransform()->GetWorldPos().y < 35.0f ||
+		_quad->GetTransform()->GetWorldPos().y > 445.0f)
+	{
+		isActive = false;
+	}
 
 	if (isActive == false)
 		return;
-
-
 
 	_quad->GetTransform()->GetPos() += _direction * _speed * DELTA_TIME;
 
@@ -33,7 +44,7 @@ void Bullet::Render()
 	if (isActive == false)
 		return;
 
-	_collider->Render();
+	// _collider->Render();
 	_quad->Render();
 }
 
@@ -42,7 +53,12 @@ void Bullet::SetDirection(Vector2 dir)
 	_direction = dir;
 }
 
-bool Bullet::IsCollision(shared_ptr<Collider> _collider)
+bool Bullet::IsCollision(shared_ptr<Collider> collider)
 {
-    return false;
+	return _collider->IsCollision(collider);
+}
+
+bool Bullet::IsCollision(shared_ptr<class Brick> brick)
+{
+	return _collider->IsCollision(brick->GetCollider());
 }

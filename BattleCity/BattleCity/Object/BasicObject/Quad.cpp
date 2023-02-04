@@ -58,6 +58,21 @@ void Quad::Render()
 	DC->DrawIndexed(_indices.size(), 0, 0);
 }
 
+void Quad::SetRender()
+{
+	_transform->SetWorldBuffer();
+
+	_vBuffer->IASet(0);
+	_indexBuffer->IASet();
+
+	DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	_srv->Set(0);
+
+	_vs->Set();
+	_ps->Set();
+}
+
 void Quad::CreateVertricesAndIndices()
 {
 	Vertex_UV v;

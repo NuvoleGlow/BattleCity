@@ -1,4 +1,7 @@
 #include "framework.h"
+
+#include "Bullet.h"
+
 #include "HeadQuarter.h"
 
 HeadQuarter::HeadQuarter()
@@ -28,5 +31,13 @@ void HeadQuarter::Render()
 		return;
 
 	_quad->Render();
-	_collider->Render();
+	// _collider->Render();
+}
+
+bool HeadQuarter::IsCollision_Bullet(shared_ptr<Bullet> bullet)
+{
+	if (isActive == false)
+		return false;
+
+	return _collider->IsCollision(bullet->GetCollider());
 }

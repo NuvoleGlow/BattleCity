@@ -1,15 +1,20 @@
 #pragma once
-class BrickWall
+
+class Bullet;
+
+class Brick
 {
 public:
-	BrickWall();
-	~BrickWall();
+	Brick();
+	~Brick();
 
 	void Update();
 	void Render();
 
 	shared_ptr<Quad> GetQuad() { return _quad; }
 	shared_ptr<Collider> GetCollider() { return _collider; }
+
+	bool IsCollision_Bullet(shared_ptr<Bullet> bullet);
 
 	bool isActive = true;
 
@@ -18,4 +23,3 @@ private:
 	shared_ptr<Collider> _collider;
 
 };
-

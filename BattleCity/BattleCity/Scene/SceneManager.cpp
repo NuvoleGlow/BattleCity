@@ -2,13 +2,16 @@
 #include "SceneManager.h"
 
 #include "BattleCityScenes/TestScene.h"
+#include "BattleCityScenes/Stage1.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 
 SceneManager::SceneManager()
 {
 	shared_ptr<Scene> test = make_shared<TestScene>();
-	_sceneTable["Test"] = test;
+	_sceneTable[0] = test;
+	shared_ptr<Scene> stage1 = make_shared<Stage1>();
+	_sceneTable[1] = stage1;
 
 	_curScene = test;
 }
@@ -41,7 +44,7 @@ void SceneManager::PostRender()
 		_curScene.lock()->PostRender();
 }
 
-void SceneManager::ChangeScene(string name)
+void SceneManager::ChangeScene(int sceneNumber)
 {
-	_curScene = _sceneTable[name];
+	_curScene = _sceneTable[sceneNumber];
 }

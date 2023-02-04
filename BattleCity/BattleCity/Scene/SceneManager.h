@@ -31,11 +31,11 @@ public:
 	void PreRender();
 	void PostRender();
 
-	void ChangeScene(string name);
+	void ChangeScene(int sceneNumber);
 
 private:
 	static SceneManager* _instance;
 
-	unordered_map<string, shared_ptr<Scene>> _sceneTable;
+	unordered_map<int, shared_ptr<Scene>> _sceneTable;
 	weak_ptr<Scene> _curScene;
 };

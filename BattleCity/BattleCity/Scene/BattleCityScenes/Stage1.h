@@ -4,14 +4,13 @@ class HeadQuarter;
 class Brick;
 class Frame;
 class PlayerTank;
-class Bullet;
 class Concrete;
 
-class TestScene : public Scene
+class Stage1 : public Scene
 {
 public:
-	TestScene();
-	virtual ~TestScene();
+	Stage1();
+	virtual ~Stage1();
 
 	virtual void Update() override;
 	virtual void PreRender() override;
@@ -19,11 +18,10 @@ public:
 
 	virtual void NextScene() override;
 
-	void Save_B();
-	void Save_C();
-	void Save_G();
-	
-	bool debug = false;
+	void Load_B();
+	void Load_C();
+	void Load_G();
+
 
 private:
 	shared_ptr<HeadQuarter> _headQuarter;
@@ -31,4 +29,7 @@ private:
 	shared_ptr<PlayerTank> _player;
 	vector<shared_ptr<Brick>> _bricks;
 	vector<shared_ptr<Concrete>> _concretes;
+
+	bool debug = false;
 };
+
