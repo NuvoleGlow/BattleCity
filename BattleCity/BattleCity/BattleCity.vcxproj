@@ -189,13 +189,16 @@
     <ClInclude Include="Object\GameObject\Brick.h" />
     <ClInclude Include="Object\GameObject\Bullet.h" />
     <ClInclude Include="Object\GameObject\Concrete.h" />
+    <ClInclude Include="Object\GameObject\EnemyTank.h" />
     <ClInclude Include="Object\GameObject\Frame.h" />
+    <ClInclude Include="Object\GameObject\Grass.h" />
     <ClInclude Include="Object\GameObject\HeadQuarter.h" />
     <ClInclude Include="Object\GameObject\PlayerTank.h" />
     <ClInclude Include="Object\UserInterface\Button.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\BattleCityScenes\Stage1.h" />
+    <ClInclude Include="Scene\BattleCityScenes\Stage2.h" />
     <ClInclude Include="Scene\BattleCityScenes\TestScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -242,12 +245,15 @@
     <ClCompile Include="Object\GameObject\Brick.cpp" />
     <ClCompile Include="Object\GameObject\Bullet.cpp" />
     <ClCompile Include="Object\GameObject\Concrete.cpp" />
+    <ClCompile Include="Object\GameObject\EnemyTank.cpp" />
     <ClCompile Include="Object\GameObject\Frame.cpp" />
+    <ClCompile Include="Object\GameObject\Grass.cpp" />
     <ClCompile Include="Object\GameObject\HeadQuarter.cpp" />
     <ClCompile Include="Object\GameObject\PlayerTank.cpp" />
     <ClCompile Include="Object\UserInterface\Button.cpp" />
     <ClCompile Include="Program\Program.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\Stage1.cpp" />
+    <ClCompile Include="Scene\BattleCityScenes\Stage2.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\TestScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -276,6 +282,9 @@
     <None Include="Library\FMOD\inc\fmod_errors.cs" />
     <None Include="Save\Stage1_B.map" />
     <None Include="Save\Stage1_C.map" />
+    <None Include="Save\Stage2_B.map" />
+    <None Include="Save\Stage2_C.map" />
+    <None Include="Save\Stage2_G.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">

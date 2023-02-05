@@ -17,6 +17,8 @@
 #include <math.h>
 #include <memory>
 #include <time.h>
+#include <cstdlib>
+#include <ctime>
 #include <vector>
 #include <string>
 #include <map>

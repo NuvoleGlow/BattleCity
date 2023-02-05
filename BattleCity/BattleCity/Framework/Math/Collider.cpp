@@ -73,6 +73,31 @@ bool Collider::IsCollision(shared_ptr<Collider> col)
     return false;
 }
 
+bool Collider::Block(shared_ptr<Collider> other)
+{
+    if (isActive == false)
+        return false;
+
+    switch (other->GetType())
+    {
+    case ColliderType::NONE:
+    {
+        break;
+    }
+
+    case ColliderType::CIRCLE:
+    {
+        return Block(dynamic_pointer_cast<CircleCollider>(other));
+        break;
+    }
+
+    default:
+        break;
+    }
+
+    return false;
+}
+
 void Collider::CreateData()
 {
     _vs = make_shared<VertexShader>(L"Shaders/Collider/ColliderVertexShader.hlsl");

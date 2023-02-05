@@ -2,15 +2,16 @@
 
 #include "Object/GameObject/Frame.h"
 #include "Object/GameObject/HeadQuarter.h"
-#include "Object/GameObject/Brick.h"
 #include "Object/GameObject/PlayerTank.h"
-#include "Object/GameObject/Bullet.h"
-#include "Object/GameObject/Concrete.h"
 #include "Object/GameObject/EnemyTank.h"
+#include "Object/GameObject/Bullet.h"
+#include "Object/GameObject/Brick.h"
+#include "Object/GameObject/Concrete.h"
+#include "Object/GameObject/Grass.h"
 
-#include "Stage1.h"
+#include "Stage2.h"
 
-Stage1::Stage1()
+Stage2::Stage2()
 {
 	_backGround = make_shared<Frame>();
 	_headQuarter = make_shared<HeadQuarter>();
@@ -19,19 +20,20 @@ Stage1::Stage1()
 	for (int i = 0; i < 20; i++)
 	{
 		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
-		enemy->GetCollider()->GetTransform()->SetPos(Vector2(464.0f, 240.0f));
+		enemy->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand() % 3));
 		_tanks.push_back(enemy);
 	}
 
 	Load_C();
 	Load_B();
+	Load_G();
 }
 
-Stage1::~Stage1()
+Stage2::~Stage2()
 {
 }
 
-void Stage1::Update()
+void Stage2::Update()
 {
 	_createCheck += DELTA_TIME;
 	CreateTank();
@@ -73,26 +75,33 @@ void Stage1::Update()
 		enemy->GetCollider()->Block(_player->GetCollider());
 		enemy->Update();
 	}
+	for (auto grass : _grasses)
+	{
+		grass->Update();
+	}
+
 	_headQuarter->Update();
 	_player->Update();
 
 	if (GameEnd() == true)
 	{
 		SCENE->ChangeScene(0);
+		return;
 	}
 
 	if (StageClear() == true)
 	{
-		SCENE->ChangeScene(2);
+		SCENE->ChangeScene(3);
+		return;
 	}
 }
 
-void Stage1::PreRender()
+void Stage2::PreRender()
 {
 	_backGround->Render();
 }
 
-void Stage1::Render()
+void Stage2::Render()
 {
 	_headQuarter->Render();
 	_player->Render();
@@ -108,17 +117,22 @@ void Stage1::Render()
 	{
 		enemy->Render();
 	}
+	for (auto grass : _grasses)
+	{
+		grass->Render();
+	}
 }
 
-void Stage1::CreateTank()
+void Stage2::CreateTank()
 {
-	if (_createCheck < _createDelay)
-		return;
-	else
+	if (_createCheck > _createDelay)
 		_createCheck = 0.0f;
-
-	if (_count == 20)
+	else
 		return;
+
+	if (_count == 19)
+		return;
+
 
 	for (auto enemy : _tanks)
 	{
@@ -132,9 +146,9 @@ void Stage1::CreateTank()
 	}
 }
 
-void Stage1::Load_B()
+void Stage2::Load_B()
 {
-	BinaryReader reader = BinaryReader(L"Save/Stage1_B.map");
+	BinaryReader reader = BinaryReader(L"Save/Stage2_B.map");
 
 	vector<Vector2> temp;
 	UINT size = reader.UInt();
@@ -151,9 +165,9 @@ void Stage1::Load_B()
 	}
 }
 
-void Stage1::Load_C()
+void Stage2::Load_C()
 {
-	BinaryReader reader = BinaryReader(L"Save/Stage1_C.map");
+	BinaryReader reader = BinaryReader(L"Save/Stage2_C.map");
 
 	vector<Vector2> temp;
 	UINT size = reader.UInt();
@@ -170,7 +184,26 @@ void Stage1::Load_C()
 	}
 }
 
-bool Stage1::GameEnd()
+void Stage2::Load_G()
+{
+	BinaryReader reader = BinaryReader(L"Save/Stage2_G.map");
+
+	vector<Vector2> temp;
+	UINT size = reader.UInt();
+	temp.resize(size);
+
+	void* ptr = temp.data();
+	reader.Byte(&ptr, sizeof(Vector2) * size);
+
+	for (int i = 0; i < temp.size(); i++)
+	{
+		shared_ptr<Grass> grass = make_shared<Grass>();
+		grass->GetQuad()->GetTransform()->SetPos(temp[i]);
+		_grasses.push_back(grass);
+	}
+}
+
+bool Stage2::GameEnd()
 {
 	if (_headQuarter->isActive == false)
 		return true;
@@ -181,7 +214,7 @@ bool Stage1::GameEnd()
 	return false;
 }
 
-bool Stage1::StageClear()
+bool Stage2::StageClear()
 {
 	if (_count == 20)
 	{

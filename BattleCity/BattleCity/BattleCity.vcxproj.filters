@@ -186,6 +186,15 @@
     <ClInclude Include="Object\GameObject\Concrete.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObject\EnemyTank.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject\Grass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BattleCityScenes\Stage2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BattleCity.cpp">
@@ -320,6 +329,15 @@
     <ClCompile Include="Object\GameObject\Concrete.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\GameObject\EnemyTank.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject\Grass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BattleCityScenes\Stage2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BattleCity.rc">
@@ -365,6 +383,9 @@
     <None Include="fmod.dll" />
     <None Include="Save\Stage1_B.map" />
     <None Include="Save\Stage1_C.map" />
+    <None Include="Save\Stage2_B.map" />
+    <None Include="Save\Stage2_C.map" />
+    <None Include="Save\Stage2_G.map" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\Collider\ColliderPixelShader.hlsl" />

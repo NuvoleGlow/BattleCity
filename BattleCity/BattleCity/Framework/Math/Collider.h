@@ -23,9 +23,11 @@ public:
 	shared_ptr<Transform> GetTransform() { return _transform; }
 
 	virtual bool IsCollision(shared_ptr<Collider> col);
+	virtual bool Block(shared_ptr<Collider> other);
 
 	virtual bool IsCollision(Vector2 pos) abstract;
 	virtual bool IsCollision(shared_ptr<CircleCollider> other) abstract;
+	virtual bool Block(shared_ptr<CircleCollider> other) abstract;
 
 	ColliderType GetType() { return _type; }
 

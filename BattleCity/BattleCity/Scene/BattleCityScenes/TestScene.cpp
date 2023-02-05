@@ -6,6 +6,7 @@
 #include "Object/GameObject/PlayerTank.h"
 #include "Object/GameObject/Bullet.h"
 #include "Object/GameObject/Concrete.h"
+#include "Object/GameObject/Grass.h"
 
 #include "TestScene.h"
 
@@ -17,26 +18,43 @@ TestScene::TestScene()
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
-	vector<Vector2> position;
-	// 
-	// position.push_back(Vector2(216.0f, 40.0f));
-	// position.push_back(Vector2(216.0f, 56.0f));
-	// position.push_back(Vector2(216.0f, 72.0f));
-	// 
-	// position.push_back(Vector2(264.0f, 40.0f));
-	// position.push_back(Vector2(264.0f, 56.0f));
-	// position.push_back(Vector2(264.0f, 72.0f));
-	// 
-	// position.push_back(Vector2(232.0f, 72.0f));
-	// position.push_back(Vector2(248.0f, 72.0f));
-	// 
-	// -------------------------------------------------
+	vector<Vector2> position_b;
+	vector<Vector2> position_c;
+	vector<Vector2> position_g;
+	
+	position_b.push_back(Vector2(216.0f, 40.0f));
+	position_b.push_back(Vector2(216.0f, 56.0f));
+	position_b.push_back(Vector2(216.0f, 72.0f));
+	
+	position_b.push_back(Vector2(264.0f, 40.0f));
+	position_b.push_back(Vector2(264.0f, 56.0f));
+	position_b.push_back(Vector2(264.0f, 72.0f));
+	
+	position_b.push_back(Vector2(232.0f, 72.0f));
+	position_b.push_back(Vector2(248.0f, 72.0f));
 
-	for (int i = 0; i < position.size(); i++)
+	// ------------------------------
+
+
+	// ------------------------------
+
+	for (int i = 0; i < position_b.size(); i++)
+	{
+		shared_ptr<Brick> brick = make_shared<Brick>();
+		brick->GetQuad()->GetTransform()->SetPos(position_b[i]);
+		_bricks.push_back(brick);
+	}
+	for (int i = 0; i < position_c.size(); i++)
 	{
 		shared_ptr<Concrete> concrete = make_shared<Concrete>();
-		concrete->GetQuad()->GetTransform()->SetPos(position[i]);
+		concrete->GetQuad()->GetTransform()->SetPos(position_c[i]);
 		_concretes.push_back(concrete);
+	}
+	for (int i = 0; i < position_g.size(); i++)
+	{
+		shared_ptr<Grass> grass = make_shared<Grass>();
+		grass->GetQuad()->GetTransform()->SetPos(position_g[i]);
+		_grasses.push_back(grass);
 	}
 }
 
@@ -56,13 +74,27 @@ void TestScene::Update()
 	}
 	if (KEY_PRESS('G'))
 	{
-		Save_B();
+		Save_G();
 	}
 	if (KEY_PRESS('N'))
 	{
 		NextScene();
 	}
+	
 
+	for (auto brick : _bricks)
+	{
+		brick->Update();
+	}
+	for (auto concrete : _concretes)
+	{
+		concrete->Update();
+	}
+	for (auto grass : _grasses)
+	{
+		grass->Update();
+	}
+	
 	if (_player->GetBullet() != nullptr && _headQuarter->IsCollision_Bullet(_player->GetBullet()))
 	{
 		_headQuarter->isActive = false;
@@ -70,14 +102,6 @@ void TestScene::Update()
 	}
 	_headQuarter->Update();
 
-	for (auto concrete : _concretes)
-	{
-		if (_player->GetBullet() != nullptr && concrete->IsCollision_Bullet(_player->GetBullet()))
-		{
-			_player->GetBullet()->isActive = false;
-		}
-		concrete->Update();
-	}
 	_player->Update();
 }
 
@@ -90,14 +114,25 @@ void TestScene::Render()
 {
 	_headQuarter->Render();
 	_player->Render();
+	for (auto brick : _bricks)
+	{
+		brick->Render();
+	}
 	for (auto concrete : _concretes)
 	{
 		concrete->Render();
+	}
+	for (auto grass : _grasses)
+	{
+		grass->Render();
 	}
 }
 
 void TestScene::NextScene()
 {
+	if (debug == false)
+		return;
+
 	SCENE->ChangeScene(1);
 }
 
@@ -105,15 +140,15 @@ void TestScene::Save_B()
 {
 	if (debug == false)
 		return;
-
-	BinaryWriter writer = BinaryWriter(L"Save/Stage1_B.map");
-
+	
+	BinaryWriter writer = BinaryWriter(L"Save/Stage2_B.map");
+	
 	vector<Vector2> temp;
 	for (int i = 0; i < _bricks.size(); i++)
 	{
 		temp.push_back(_bricks[i]->GetQuad()->GetTransform()->GetWorldPos());
 	}
-
+	
 	writer.UInt(temp.size());
 	writer.Byte(temp.data(), sizeof(Vector2) * temp.size());
 }
@@ -122,19 +157,32 @@ void TestScene::Save_C()
 {
 	if (debug == false)
 		return;
-
-	BinaryWriter writer = BinaryWriter(L"Save/Stage1_C.map");
-
+	
+	BinaryWriter writer = BinaryWriter(L"Save/Stage2_C.map");
+	
 	vector<Vector2> temp;
 	for (int i = 0; i < _concretes.size(); i++)
 	{
 		temp.push_back(_concretes[i]->GetQuad()->GetTransform()->GetWorldPos());
 	}
-
+	
 	writer.UInt(temp.size());
 	writer.Byte(temp.data(), sizeof(Vector2) * temp.size());
 }
 
 void TestScene::Save_G()
 {
+	if (debug == false)
+		return;
+
+	BinaryWriter writer = BinaryWriter(L"Save/Stage2_G.map");
+
+	vector<Vector2> temp;
+	for (int i = 0; i < _grasses.size(); i++)
+	{
+		temp.push_back(_grasses[i]->GetQuad()->GetTransform()->GetWorldPos());
+	}
+
+	writer.UInt(temp.size());
+	writer.Byte(temp.data(), sizeof(Vector2) * temp.size());
 }

@@ -1,21 +1,19 @@
 #include "framework.h"
 
 #include "Bullet.h"
-#include "Brick.h"
 
 #include "PlayerTank.h"
 
 PlayerTank::PlayerTank()
 {
+	_collider = make_shared<CircleCollider>(16.0f);
 	CreateAction(L"Resource/Texture/PlayerTank.png");
 	_firePos = make_shared<Transform>();
-	_firePos->SetParent(_sprite->GetTransform());
+	_firePos->SetParent(_collider->GetTransform());
 	_firePos->GetPos().y += 16.0f;
-	_collider = make_shared<CircleCollider>(16.0f);
-	_collider->GetTransform()->SetParent(_sprite->GetTransform());
 	_bullet = make_shared<Bullet>();
 
-	_sprite->GetTransform()->SetPos(Vector2(192.0f, 48.0f));
+	_collider->GetTransform()->SetPos(Vector2(176.0f, 48.0f));
 
 }
 
@@ -26,6 +24,7 @@ PlayerTank::~PlayerTank()
 void PlayerTank::CreateAction(wstring file, float speed, Action::Type type)
 {
 	_sprite = make_shared<Sprite>(file, Vector2(32.0f, 32.0f), Vector2(2.0f, 1.0f));
+	_sprite->GetTransform()->SetParent(_collider->GetTransform());
 
 	vector<Action::Clip> clips;
 	for (int y = 0; y < 1; y++)
@@ -54,31 +53,31 @@ void PlayerTank::Input()
 {
 	if (KEY_PRESS('A'))
 	{
-		if (_sprite->GetTransform()->GetPos().x < 48.0f)
+		if (_collider->GetTransform()->GetPos().x < 48.0f)
 			return;
-		_sprite->GetTransform()->GetAngle() = PI * 0.5f;
-		_sprite->GetTransform()->GetPos().x -= DELTA_TIME * _speed;
+		_collider->GetTransform()->GetAngle() = PI * 0.5f;
+		_collider->GetTransform()->GetPos().x -= DELTA_TIME * _speed;
 	}
 	else if (KEY_PRESS('D'))
 	{
-		if (_sprite->GetTransform()->GetPos().x > 432.0f)
+		if (_collider->GetTransform()->GetPos().x > 432.0f)
 			return;
-		_sprite->GetTransform()->GetAngle() = PI * 1.5f;
-		_sprite->GetTransform()->GetPos().x += DELTA_TIME * _speed;
+		_collider->GetTransform()->GetAngle() = PI * 1.5f;
+		_collider->GetTransform()->GetPos().x += DELTA_TIME * _speed;
 	}
 	else if (KEY_PRESS('W'))
 	{
-		if (_sprite->GetTransform()->GetPos().y > 432.0f)
+		if (_collider->GetTransform()->GetPos().y > 432.0f)
 			return;
-		_sprite->GetTransform()->GetAngle() = PI * 0.0f;
-		_sprite->GetTransform()->GetPos().y += DELTA_TIME * _speed;
+		_collider->GetTransform()->GetAngle() = PI * 0.0f;
+		_collider->GetTransform()->GetPos().y += DELTA_TIME * _speed;
 	}
 	else if (KEY_PRESS('S'))
 	{
-		if (_sprite->GetTransform()->GetPos().y < 48.0f)
+		if (_collider->GetTransform()->GetPos().y < 48.0f)
 			return;
-		_sprite->GetTransform()->GetAngle() = PI * 1.0f;
-		_sprite->GetTransform()->GetPos().y -= DELTA_TIME * _speed;
+		_collider->GetTransform()->GetAngle() = PI * 1.0f;
+		_collider->GetTransform()->GetPos().y -= DELTA_TIME * _speed;
 	}
 	if (KEY_PRESS(VK_SPACE))
 	{
@@ -88,7 +87,7 @@ void PlayerTank::Input()
 
 void PlayerTank::Update()
 {
-	if (isActive == false)
+	if (isActive == false || _hp <= 0)
 		return;
 
 	Input();
@@ -102,7 +101,7 @@ void PlayerTank::Update()
 
 void PlayerTank::Render()
 {
-	if (isActive == false)
+	if (isActive == false || _hp <= 0)
 		return;
 
 	_sprite->SetSpriteAction(_action->GetCurClip());
@@ -117,20 +116,27 @@ void PlayerTank::Shot()
 	else
 	{
 		_bullet->isActive = true;
-		_bullet->SetDirection((_firePos->GetWorldPos() - _sprite->GetTransform()->GetWorldPos()).Normal());
+		_bullet->SetDirection((_firePos->GetWorldPos() - _collider->GetTransform()->GetWorldPos()).Normal());
 		_bullet->GetTransform()->GetPos() = _firePos->GetWorldPos();
-		_bullet->GetTransform()->GetAngle() = _sprite->GetTransform()->GetAngle();
+		_bullet->GetTransform()->GetAngle() = _collider->GetTransform()->GetAngle();
 		_bullet->GetTransform()->SetSRT();
 	}
 }
 
-bool PlayerTank::IsCollision_Brick(shared_ptr<class Brick> brick)
+bool PlayerTank::CheckAlive()
 {
-	return _collider->IsCollision(brick->GetCollider());
+	if (isActive == false || _hp <= 0)
+		return false;
+	return true;
 }
 
 bool PlayerTank::IsCollision_Bullet(shared_ptr<class Bullet> bullet)
 {
+	if (_collider->IsCollision(bullet->GetCollider()))
+	{
+		_hp--;
+		return true;
+	}
 	return false;
 }
 

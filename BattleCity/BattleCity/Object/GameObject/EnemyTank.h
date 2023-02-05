@@ -1,9 +1,9 @@
 #pragma once
-class PlayerTank
+class EnemyTank
 {
 public:
-	PlayerTank();
-	~PlayerTank();
+	EnemyTank();
+	~EnemyTank();
 
 	void CreateAction(wstring file, float speed = 0.1f, Action::Type = Action::Type::LOOP);
 
@@ -14,13 +14,12 @@ public:
 
 	void Shot();
 
-	shared_ptr<Sprite> GetSprite() { return _sprite; }
 	shared_ptr<Bullet> GetBullet();
+	shared_ptr<Sprite> GetSprite() { return _sprite; }
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
-	bool CheckAlive();
 	bool IsCollision_Bullet(shared_ptr<class Bullet> bullet);
-	bool isActive = true;
+	bool isActive = false;
 
 private:
 	shared_ptr<Transform> _firePos;
@@ -31,4 +30,7 @@ private:
 
 	float _speed = 64.0f;
 	int _hp = 1;
+
+	const float _fireDelay = 2.5f;
+	float _fireCheck = 0.0f;
 };

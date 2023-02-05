@@ -12,7 +12,7 @@ public:
 	virtual bool IsCollision(Vector2 pos) override;
 	virtual bool IsCollision(shared_ptr<CircleCollider> other) override;
 
-	bool Block(shared_ptr<CircleCollider> other);
+	virtual bool Block(shared_ptr<CircleCollider> other) override;
 
 	float GetWorldRadius();
 
