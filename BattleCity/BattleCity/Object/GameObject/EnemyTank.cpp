@@ -10,8 +10,6 @@
 
 EnemyTank::EnemyTank()
 {
-	srand((unsigned int)time(NULL));
-
 	_collider = make_shared<CircleCollider>(16.0f);
 	CreateAction(L"Resource/Texture/EnemyTank.png");
 	_firePos = make_shared<Transform>();
@@ -53,29 +51,41 @@ void EnemyTank::Input()
 	int direction = rand() % 4;
 	if (direction == 0)
 	{
-		if (_collider->GetTransform()->GetPos().x < 47.0f)
+		if (_collider->GetTransform()->GetPos().x < 48.0f)
+		{
+			_collider->GetTransform()->GetPos().x = 48.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 0.5f;
 		_dir = { -1.0f, 0.0f };
 	}
 	if (direction == 1)
 	{
-		if (_collider->GetTransform()->GetPos().x > 433.0f)
+		if (_collider->GetTransform()->GetPos().x > 432.0f)
+		{
+			_collider->GetTransform()->GetPos().x = 432.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 1.5f;
 		_dir = { 1.0f, 0.0f };
 	}
 	if (direction == 2)
 	{
-		if (_collider->GetTransform()->GetPos().y > 433.0f)
+		if (_collider->GetTransform()->GetPos().y > 432.0f)
+		{
+			_collider->GetTransform()->GetPos().y = 432.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 0.0f;
 		_dir = { 0.0f, 1.0f };
 	}
 	if (direction == 3)
 	{
-		if (_collider->GetTransform()->GetPos().y < 47.0f)
+		if (_collider->GetTransform()->GetPos().y < 48.0f)
+		{
+			_collider->GetTransform()->GetPos().y = 48.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 1.0f;
 		_dir = { 0.0f, -1.0f };
 	}
@@ -87,17 +97,23 @@ void EnemyTank::Init()
 
 void EnemyTank::Update()
 {
-	if (CheckAlive() == false)
+	if (isActive == false)
 		return;
 
 	_fireCheck += DELTA_TIME;
 	_moveCheck += DELTA_TIME;
 
-	_collider->GetTransform()->GetPos() += _dir * DELTA_TIME * _speed;
 	if (_moveCheck > _moveDelay)
 	{
 		_moveCheck = 0.0f;
 		Input();
+	}
+	if (_collider->GetTransform()->GetPos().x >= 48.0f && _collider->GetTransform()->GetPos().x <= 432.0f)
+	{
+		if (_collider->GetTransform()->GetPos().y >= 48.0f && _collider->GetTransform()->GetPos().y <= 432.0f)
+		{
+			_collider->GetTransform()->GetPos() += _dir * DELTA_TIME * _speed;
+		}
 	}
 	Shot();
 	_sprite->Update();
@@ -105,11 +121,12 @@ void EnemyTank::Update()
 	_firePos->Update();
 	_collider->Update();
 	_bullet->Update();
+	CheckAlive();
 }
 
 void EnemyTank::Render()
 {
-	if (CheckAlive() == false)
+	if (isActive == false)
 		return;
 
 	_sprite->SetSpriteAction(_action->GetCurClip());
@@ -141,7 +158,7 @@ void EnemyTank::Attack_P(shared_ptr<PlayerTank> player)
 	if (_bullet->IsCollision(player->GetCollider()))
 	{
 		_bullet->isActive = false;
-		player->MinusHP();
+		--player->GetHP();
 	}
 }
 
@@ -174,7 +191,7 @@ void EnemyTank::Attack_E(shared_ptr<EnemyTank> enemy)
 	if (_bullet->IsCollision(enemy->GetCollider()))
 	{
 		_bullet->isActive = false;
-		enemy->MinusHP();
+		--enemy->GetHP();
 	}
 }
 
@@ -190,14 +207,12 @@ void EnemyTank::Attack_H(shared_ptr<HeadQuarter> headQuarter)
 	}
 }
 
-bool EnemyTank::CheckAlive()
+void EnemyTank::CheckAlive()
 {
-	if (isActive == false || _hp <= 0)
+	if (_hp <= 0)
 	{
 		_collider->isActive = false;
 		isActive = false;
 		_hp = 0;
-		return false;
 	}
-	return true;
 }

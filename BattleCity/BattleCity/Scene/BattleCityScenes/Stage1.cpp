@@ -12,14 +12,16 @@
 
 Stage1::Stage1()
 {
+	srand((unsigned int)time(NULL));
+
 	_backGround = make_shared<Frame>();
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
-		enemy->GetCollider()->GetTransform()->SetPos(Vector2(464.0f, 240.0f));
+		enemy->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand()));
 		_tanks.push_back(enemy);
 	}
 
@@ -35,8 +37,15 @@ void Stage1::Update()
 {
 	_createCheck += DELTA_TIME;
 
+	CreateTank();
+
 	for (auto enemy : _tanks)
 	{
+		for (auto collider : _backGround->GetColliders())
+		{
+			collider->Block(enemy->GetCollider());
+			collider->Block(_player->GetCollider());
+		}
 		for (auto brick : _bricks)
 		{
 			brick->GetCollider()->Block(enemy->GetCollider());
@@ -55,19 +64,16 @@ void Stage1::Update()
 		}
 
 		{
-			enemy->GetCollider()->Block(_player->GetCollider());
 			_player->Attack_E(enemy);
 			_player->Attack_H(_headQuarter);
 			enemy->Attack_P(_player);
 			enemy->Attack_H(_headQuarter);
 			enemy->Update();
-			_player->Update();
-			_headQuarter->Update();
 		}
 	}
 
-	CreateTank();
-
+	_player->Update();
+	_headQuarter->Update();
 	if (GameEnd() == true)
 	{
 		SCENE->ChangeScene(0);
@@ -88,6 +94,10 @@ void Stage1::Render()
 {
 	_headQuarter->Render();
 	_player->Render();
+	for (auto enemy : _tanks)
+	{
+		enemy->Render();
+	}
 	for (auto brick : _bricks)
 	{
 		brick->Render();
@@ -96,29 +106,17 @@ void Stage1::Render()
 	{
 		concrete->Render();
 	}
-	for (auto enemy : _tanks)
-	{
-		enemy->Render();
-	}
 }
 
 void Stage1::CreateTank()
 {
-	if (_createCheck < _createDelay || _count >= 1)
+	if (_createCheck < _createDelay || _count >= _tanks.size())
 		return;
 	else
 		_createCheck = 0.0f;
 
-	for (auto enemy : _tanks)
-	{
-		if (enemy->isActive == false)
-		{
-			enemy->isActive = true;
-			enemy->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(_count));
-			_count++;
-			break;
-		}
-	}
+	_tanks[_count]->isActive = true;
+	_count += 1;
 }
 
 void Stage1::Load_B()
@@ -164,7 +162,7 @@ bool Stage1::GameEnd()
 	if (_headQuarter->isActive == false)
 		return true;
 
-	if (_player->CheckAlive() == false)
+	if (_player->isActive == false)
 		return true;
 
 	return false;
@@ -172,7 +170,7 @@ bool Stage1::GameEnd()
 
 bool Stage1::StageClear()
 {
-	if (_count >= 1)
+	if (_count >= _tanks.size())
 	{
 		for (auto enemy : _tanks)
 		{

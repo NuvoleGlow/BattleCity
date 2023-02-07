@@ -17,10 +17,10 @@ Stage2::Stage2()
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
-		enemy->GetCollider()->GetTransform()->SetPos(Vector2(464.0f, 240.0f));
+		enemy->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand()));
 		_tanks.push_back(enemy);
 	}
 
@@ -36,52 +36,44 @@ Stage2::~Stage2()
 void Stage2::Update()
 {
 	_createCheck += DELTA_TIME;
+
 	CreateTank();
 
 	for (auto enemy : _tanks)
 	{
 		for (auto brick : _bricks)
 		{
-			enemy->Attack_B(brick);
-			_player->Attack_B(brick);
 			brick->GetCollider()->Block(enemy->GetCollider());
 			brick->GetCollider()->Block(_player->GetCollider());
+			_player->Attack_B(brick);
+			enemy->Attack_B(brick);
+			brick->Update();
 		}
 		for (auto concrete : _concretes)
 		{
-			enemy->Attack_C(concrete);
-			_player->Attack_C(concrete);
 			concrete->GetCollider()->Block(enemy->GetCollider());
 			concrete->GetCollider()->Block(_player->GetCollider());
-		}
-		for (auto enemy_ : _tanks)
-		{
-			enemy->Attack_E(enemy_);
-			enemy_->GetCollider()->Block(enemy->GetCollider());
+			_player->Attack_C(concrete);
+			enemy->Attack_C(concrete);
+			concrete->Update();
 		}
 
 		{
-			enemy->Attack_P(_player);
-			_player->Attack_E(enemy);
 			enemy->GetCollider()->Block(_player->GetCollider());
-			_player->GetCollider()->Block(enemy->GetCollider());
+			_player->Attack_E(enemy);
+			_player->Attack_H(_headQuarter);
+			enemy->Attack_P(_player);
+			enemy->Attack_H(_headQuarter);
+			enemy->Update();
 		}
-		enemy->Update();
 	}
-	for (auto brick : _bricks)
-	{
-		brick->Update();
-	}
-	for (auto concrete : _concretes)
-	{
-		concrete->Update();
-	}
+
+	_player->Update();
+	_headQuarter->Update();
 	for (auto grass : _grasses)
 	{
 		grass->Update();
 	}
-	_player->Update();
-	_headQuarter->Update();
 
 	if (GameEnd() == true)
 	{
@@ -90,7 +82,7 @@ void Stage2::Update()
 
 	if (StageClear() == true)
 	{
-		SCENE->ChangeScene(3);
+		SCENE->ChangeScene(2);
 	}
 }
 
@@ -103,6 +95,10 @@ void Stage2::Render()
 {
 	_headQuarter->Render();
 	_player->Render();
+	for (auto enemy : _tanks)
+	{
+		enemy->Render();
+	}
 	for (auto brick : _bricks)
 	{
 		brick->Render();
@@ -110,10 +106,6 @@ void Stage2::Render()
 	for (auto concrete : _concretes)
 	{
 		concrete->Render();
-	}
-	for (auto enemy : _tanks)
-	{
-		enemy->Render();
 	}
 	for (auto grass : _grasses)
 	{
@@ -123,24 +115,13 @@ void Stage2::Render()
 
 void Stage2::CreateTank()
 {
-	if (_createCheck < _createDelay)
+	if (_createCheck < _createDelay || _count >= _tanks.size())
 		return;
 	else
 		_createCheck = 0.0f;
 
-	if (_count == 20)
-		return;
-
-	for (auto enemy : _tanks)
-	{
-		if (enemy->isActive == false)
-		{
-			enemy->isActive = true;
-			enemy->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(_count));
-			_count++;
-			break;
-		}
-	}
+	_tanks[_count]->isActive = true;
+	_count += 1;
 }
 
 void Stage2::Load_B()
@@ -205,7 +186,7 @@ bool Stage2::GameEnd()
 	if (_headQuarter->isActive == false)
 		return true;
 
-	if (_player->CheckAlive() == false)
+	if (_player->isActive == false)
 		return true;
 
 	return false;
@@ -213,7 +194,7 @@ bool Stage2::GameEnd()
 
 bool Stage2::StageClear()
 {
-	if (_count == 20)
+	if (_count >= _tanks.size())
 	{
 		for (auto enemy : _tanks)
 		{

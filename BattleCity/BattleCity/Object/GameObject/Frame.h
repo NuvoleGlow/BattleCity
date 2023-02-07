@@ -9,11 +9,12 @@ public:
 	void Render();
 
 	Vector2 GetspawnPoint(int number) { return _spawnPoint[number % 3]->GetWorldPos(); }
+	vector<shared_ptr<Collider>> GetColliders() { return _colliders; }
 
 private:
 	shared_ptr<Quad> _frame;
 	shared_ptr<Quad> _field;
 	vector<shared_ptr<Transform>> _spawnPoint;
-
+	vector<shared_ptr<Collider>> _colliders;
 };
 

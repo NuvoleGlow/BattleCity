@@ -9,6 +9,7 @@ Bullet::Bullet()
 	_collider = make_shared<CircleCollider>(3.0f);
 	_quad = make_shared<Quad>(L"Resource/Texture/Bullet.png", Vector2(6.0f, 8.0f));
 	_quad->GetTransform()->SetParent(_collider->GetTransform());
+	_collider->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
 }
 
 Bullet::~Bullet()

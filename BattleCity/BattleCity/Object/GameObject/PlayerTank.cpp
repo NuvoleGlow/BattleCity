@@ -58,28 +58,40 @@ void PlayerTank::Input()
 	if (KEY_PRESS('A'))
 	{
 		if (_collider->GetTransform()->GetPos().x < 48.0f)
+		{
+			_collider->GetTransform()->GetPos().x = 48.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 0.5f;
 		_collider->GetTransform()->GetPos().x -= DELTA_TIME * _speed;
 	}
 	else if (KEY_PRESS('D'))
 	{
 		if (_collider->GetTransform()->GetPos().x > 432.0f)
+		{
+			_collider->GetTransform()->GetPos().x = 432.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 1.5f;
 		_collider->GetTransform()->GetPos().x += DELTA_TIME * _speed;
 	}
 	else if (KEY_PRESS('W'))
 	{
 		if (_collider->GetTransform()->GetPos().y > 432.0f)
+		{
+			_collider->GetTransform()->GetPos().y = 432.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 0.0f;
 		_collider->GetTransform()->GetPos().y += DELTA_TIME * _speed;
 	}
 	else if (KEY_PRESS('S'))
 	{
 		if (_collider->GetTransform()->GetPos().y < 48.0f)
+		{
+			_collider->GetTransform()->GetPos().y = 48.0f;
 			return;
+		}
 		_collider->GetTransform()->GetAngle() = PI * 1.0f;
 		_collider->GetTransform()->GetPos().y -= DELTA_TIME * _speed;
 	}
@@ -91,7 +103,7 @@ void PlayerTank::Input()
 
 void PlayerTank::Update()
 {
-	if (CheckAlive() == false)
+	if (isActive == false)
 		return;
 
 	Input();
@@ -101,11 +113,12 @@ void PlayerTank::Update()
 	_firePos->Update();
 	_collider->Update();
 	_bullet->Update();
+	CheckAlive();
 }
 
 void PlayerTank::Render()
 {
-	if (CheckAlive() == false)
+	if (isActive == false)
 		return;
 
 	_sprite->SetSpriteAction(_action->GetCurClip());
@@ -134,7 +147,7 @@ void PlayerTank::Attack_E(shared_ptr<EnemyTank> enemy)
 	if (_bullet->IsCollision(enemy->GetCollider()))
 	{
 		_bullet->isActive = false;
-		enemy->MinusHP();
+		--enemy->GetHP();
 	}
 }
 
@@ -172,14 +185,12 @@ void PlayerTank::Attack_H(shared_ptr<HeadQuarter> headQuarter)
 	}
 }
 
-bool PlayerTank::CheckAlive()
+void PlayerTank::CheckAlive()
 {
-	if (isActive == false || _hp <= 0)
+	if (_hp <= 0)
 	{
 		_collider->isActive = false;
 		isActive = false;
 		_hp = 0;
-		return false;
 	}
-	return true;
 }

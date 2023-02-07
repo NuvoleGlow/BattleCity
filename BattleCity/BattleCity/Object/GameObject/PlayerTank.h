@@ -20,16 +20,16 @@ public:
 	void Render();
 
 	void Shot();
+	void CheckAlive();
 	void Attack_E(shared_ptr<EnemyTank> enemy);
 	void Attack_B(shared_ptr<Brick> brick);
 	void Attack_C(shared_ptr<Concrete> concrete);
 	void Attack_H(shared_ptr<HeadQuarter> headQuarter);
 
-	int& MinusHP() { return _hp -= 1; }
+	int& GetHP() { return _hp; }
 	shared_ptr<Sprite> GetSprite() { return _sprite; }
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
-	bool CheckAlive();
 	bool isActive = true;
 
 private:
