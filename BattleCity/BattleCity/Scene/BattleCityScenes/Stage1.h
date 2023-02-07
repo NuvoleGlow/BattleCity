@@ -33,8 +33,6 @@ private:
 	vector<shared_ptr<Concrete>> _concretes;
 	vector<shared_ptr<EnemyTank>> _tanks;
 
-	bool debug = false;
-
 	const float _createDelay = 5.0f;
 	float _createCheck = 0.0f;
 	int _count = 0;

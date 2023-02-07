@@ -1,6 +1,10 @@
 #include "framework.h"
 
 #include "Bullet.h"
+#include "Brick.h"
+#include "Concrete.h"
+#include "EnemyTank.h"
+#include "HeadQuarter.h"
 
 #include "PlayerTank.h"
 
@@ -11,10 +15,10 @@ PlayerTank::PlayerTank()
 	_firePos = make_shared<Transform>();
 	_firePos->SetParent(_collider->GetTransform());
 	_firePos->GetPos().y += 16.0f;
-	_bullet = make_shared<Bullet>();
 
 	_collider->GetTransform()->SetPos(Vector2(176.0f, 48.0f));
 
+	_bullet = make_shared<Bullet>();
 }
 
 PlayerTank::~PlayerTank()
@@ -87,7 +91,7 @@ void PlayerTank::Input()
 
 void PlayerTank::Update()
 {
-	if (isActive == false || _hp <= 0)
+	if (CheckAlive() == false)
 		return;
 
 	Input();
@@ -101,7 +105,7 @@ void PlayerTank::Update()
 
 void PlayerTank::Render()
 {
-	if (isActive == false || _hp <= 0)
+	if (CheckAlive() == false)
 		return;
 
 	_sprite->SetSpriteAction(_action->GetCurClip());
@@ -117,33 +121,65 @@ void PlayerTank::Shot()
 	{
 		_bullet->isActive = true;
 		_bullet->SetDirection((_firePos->GetWorldPos() - _collider->GetTransform()->GetWorldPos()).Normal());
-		_bullet->GetTransform()->GetPos() = _firePos->GetWorldPos();
-		_bullet->GetTransform()->GetAngle() = _collider->GetTransform()->GetAngle();
-		_bullet->GetTransform()->SetSRT();
+		_bullet->GetCollider()->GetTransform()->SetPos(_firePos->GetWorldPos());
+		_bullet->GetCollider()->GetTransform()->GetAngle() = _collider->GetTransform()->GetAngle();
+		_bullet->GetCollider()->GetTransform()->SetSRT();
+	}
+}
+
+void PlayerTank::Attack_E(shared_ptr<EnemyTank> enemy)
+{
+	if (enemy == nullptr || enemy->isActive == false)
+		return;
+	if (_bullet->IsCollision(enemy->GetCollider()))
+	{
+		_bullet->isActive = false;
+		enemy->MinusHP();
+	}
+}
+
+void PlayerTank::Attack_B(shared_ptr<Brick> brick)
+{
+	if (brick == nullptr || brick->isActive == false)
+		return;
+	if (_bullet->IsCollision(brick->GetCollider()))
+	{
+		_bullet->isActive = false;
+		brick->GetCollider()->isActive = false;
+		brick->isActive = false;
+	}
+}
+
+void PlayerTank::Attack_C(shared_ptr<Concrete> concrete)
+{
+	if (concrete == nullptr)
+		return;
+	if (_bullet->IsCollision(concrete->GetCollider()))
+	{
+		_bullet->isActive = false;
+	}
+}
+
+void PlayerTank::Attack_H(shared_ptr<HeadQuarter> headQuarter)
+{
+	if (headQuarter == nullptr || headQuarter->isActive == false)
+		return;
+	if (_bullet->IsCollision(headQuarter->GetCollider()))
+	{
+		_bullet->isActive = false;
+		headQuarter->GetCollider()->isActive = false;
+		headQuarter->isActive = false;
 	}
 }
 
 bool PlayerTank::CheckAlive()
 {
 	if (isActive == false || _hp <= 0)
-		return false;
-	return true;
-}
-
-bool PlayerTank::IsCollision_Bullet(shared_ptr<class Bullet> bullet)
-{
-	if (_collider->IsCollision(bullet->GetCollider()))
 	{
-		_hp--;
-		return true;
+		_collider->isActive = false;
+		isActive = false;
+		_hp = 0;
+		return false;
 	}
-	return false;
-}
-
-shared_ptr<Bullet> PlayerTank::GetBullet()
-{
-	if (_bullet->isActive == false)
-		return nullptr;
-
-	return _bullet;
+	return true;
 }

@@ -1,7 +1,4 @@
 #include "framework.h"
-
-#include "Bullet.h"
-
 #include "Concrete.h"
 
 Concrete::Concrete()
@@ -30,9 +27,4 @@ void Concrete::Render()
 		return;
 
 	_quad->Render();
-}
-
-bool Concrete::IsCollision_Bullet(shared_ptr<Bullet> bullet)
-{
-	return _collider->IsCollision(bullet->GetCollider());
 }

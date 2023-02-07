@@ -16,7 +16,6 @@ TestScene::TestScene()
 
 	_backGround = make_shared<Frame>();
 	_headQuarter = make_shared<HeadQuarter>();
-	_player = make_shared<PlayerTank>();
 
 	vector<Vector2> position_b;
 	vector<Vector2> position_c;
@@ -34,6 +33,241 @@ TestScene::TestScene()
 	position_b.push_back(Vector2(248.0f, 72.0f));
 
 	// ------------------------------
+
+	position_c.push_back(Vector2(40.0f, 40.0f));
+	position_c.push_back(Vector2(56.0f, 40.0f));
+	position_b.push_back(Vector2(72.0f, 40.0f));
+	position_b.push_back(Vector2(88.0f, 40.0f));
+	position_b.push_back(Vector2(104.0f, 40.0f));
+	position_b.push_back(Vector2(120.0f, 40.0f));
+	position_b.push_back(Vector2(328.0f, 40.0f));
+	position_b.push_back(Vector2(344.0f, 40.0f));
+
+
+	position_c.push_back(Vector2(40.0f, 56.0f));
+	position_c.push_back(Vector2(56.0f, 56.0f));
+	position_b.push_back(Vector2(72.0f, 56.0f));
+	position_b.push_back(Vector2(88.0f, 56.0f));
+	position_b.push_back(Vector2(104.0f, 56.0f));
+	position_b.push_back(Vector2(120.0f, 56.0f));
+	position_b.push_back(Vector2(328.0f, 56.0f));
+	position_b.push_back(Vector2(344.0f, 56.0f));
+
+
+	position_b.push_back(Vector2(40.0f, 72.0f));
+	position_b.push_back(Vector2(56.0f, 72.0f));
+	position_b.push_back(Vector2(72.0f, 72.0f));
+	position_b.push_back(Vector2(88.0f, 72.0f));
+	position_c.push_back(Vector2(136.0f, 72.0f));
+	position_g.push_back(Vector2(328.0f, 72.0f));
+	position_g.push_back(Vector2(344.0f, 72.0f));
+	position_g.push_back(Vector2(360.0f, 72.0f));
+	position_g.push_back(Vector2(376.0f, 72.0f));
+	position_g.push_back(Vector2(392.0f, 72.0f));
+	position_g.push_back(Vector2(408.0f, 72.0f));
+
+
+	position_b.push_back(Vector2(40.0f, 88.0f));
+	position_b.push_back(Vector2(56.0f, 88.0f));
+	position_b.push_back(Vector2(72.0f, 88.0f));
+	position_b.push_back(Vector2(88.0f, 88.0f));
+	position_c.push_back(Vector2(136.0f, 88.0f));
+	position_g.push_back(Vector2(328.0f, 88.0f));
+	position_g.push_back(Vector2(344.0f, 88.0f));
+	position_g.push_back(Vector2(360.0f, 88.0f));
+	position_g.push_back(Vector2(376.0f, 88.0f));
+	position_g.push_back(Vector2(392.0f, 88.0f));
+	position_g.push_back(Vector2(408.0f, 88.0f));
+
+
+	position_b.push_back(Vector2(40.0f, 104.0f));
+	position_b.push_back(Vector2(56.0f, 104.0f));
+	position_c.push_back(Vector2(136.0f, 104.0f));
+	position_g.push_back(Vector2(328.0f, 104.0f));
+	position_g.push_back(Vector2(344.0f, 104.0f));
+	position_g.push_back(Vector2(360.0f, 104.0f));
+	position_g.push_back(Vector2(376.0f, 104.0f));
+	position_g.push_back(Vector2(392.0f, 104.0f));
+	position_g.push_back(Vector2(408.0f, 104.0f));
+
+
+	position_b.push_back(Vector2(40.0f, 120.0f));
+	position_b.push_back(Vector2(56.0f, 120.0f));
+	position_c.push_back(Vector2(136.0f, 120.0f));
+	position_b.push_back(Vector2(264.0f, 120.0f));
+	position_b.push_back(Vector2(280.0f, 120.0f));
+	position_b.push_back(Vector2(296.0f, 120.0f));
+	position_b.push_back(Vector2(312.0f, 120.0f));
+	position_g.push_back(Vector2(328.0f, 120.0f));
+	position_g.push_back(Vector2(344.0f, 120.0f));
+	position_g.push_back(Vector2(360.0f, 120.0f));
+	position_g.push_back(Vector2(376.0f, 120.0f));
+	position_g.push_back(Vector2(392.0f, 120.0f));
+	position_g.push_back(Vector2(408.0f, 120.0f));
+
+
+	position_b.push_back(Vector2(200.0f, 136.0f));
+	position_b.push_back(Vector2(216.0f, 136.0f));
+	position_b.push_back(Vector2(264.0f, 136.0f));
+	position_b.push_back(Vector2(280.0f, 136.0f));
+	position_b.push_back(Vector2(296.0f, 136.0f));
+	position_b.push_back(Vector2(312.0f, 136.0f));
+	position_g.push_back(Vector2(328.0f, 136.0f));
+	position_g.push_back(Vector2(344.0f, 136.0f));
+	position_g.push_back(Vector2(360.0f, 136.0f));
+	position_g.push_back(Vector2(376.0f, 136.0f));
+	position_g.push_back(Vector2(392.0f, 136.0f));
+	position_g.push_back(Vector2(408.0f, 136.0f));
+	position_g.push_back(Vector2(424.0f, 136.0f));
+	position_g.push_back(Vector2(440.0f, 136.0f));
+
+
+	position_b.push_back(Vector2(200.0f, 152.0f));
+	position_b.push_back(Vector2(216.0f, 152.0f));
+	position_g.push_back(Vector2(328.0f, 152.0f));
+	position_g.push_back(Vector2(344.0f, 152.0f));
+	position_g.push_back(Vector2(360.0f, 152.0f));
+	position_g.push_back(Vector2(376.0f, 152.0f));
+	position_g.push_back(Vector2(392.0f, 152.0f));
+	position_g.push_back(Vector2(408.0f, 152.0f));
+	position_g.push_back(Vector2(424.0f, 152.0f));
+	position_g.push_back(Vector2(440.0f, 152.0f));
+
+
+	position_b.push_back(Vector2(40.0f, 168.0f));
+	position_b.push_back(Vector2(56.0f, 168.0f));
+	position_b.push_back(Vector2(72.0f, 168.0f));
+	position_b.push_back(Vector2(120.0f, 168.0f));
+	position_b.push_back(Vector2(136.0f, 168.0f));
+	position_b.push_back(Vector2(152.0f, 168.0f));
+	position_b.push_back(Vector2(168.0f, 168.0f));
+	position_b.push_back(Vector2(216.0f, 168.0f));
+	position_g.push_back(Vector2(328.0f, 168.0f));
+	position_g.push_back(Vector2(344.0f, 168.0f));
+	position_g.push_back(Vector2(360.0f, 168.0f));
+	position_g.push_back(Vector2(376.0f, 168.0f));
+	position_g.push_back(Vector2(392.0f, 168.0f));
+	position_g.push_back(Vector2(408.0f, 168.0f));
+	position_g.push_back(Vector2(424.0f, 168.0f));
+	position_g.push_back(Vector2(440.0f, 168.0f));
+
+
+	position_b.push_back(Vector2(40.0f, 184.0f));
+	position_b.push_back(Vector2(56.0f, 184.0f));
+	position_b.push_back(Vector2(72.0f, 184.0f));
+	position_b.push_back(Vector2(120.0f, 184.0f));
+	position_b.push_back(Vector2(136.0f, 184.0f));
+	position_b.push_back(Vector2(152.0f, 184.0f));
+	position_b.push_back(Vector2(168.0f, 184.0f));
+	position_b.push_back(Vector2(216.0f, 184.0f));
+	position_b.push_back(Vector2(232.0f, 184.0f));
+	position_b.push_back(Vector2(248.0f, 184.0f));
+	position_b.push_back(Vector2(264.0f, 184.0f));
+	position_b.push_back(Vector2(280.0f, 184.0f));
+	position_b.push_back(Vector2(296.0f, 184.0f));
+	position_b.push_back(Vector2(312.0f, 184.0f));
+	position_g.push_back(Vector2(328.0f, 184.0f));
+	position_g.push_back(Vector2(344.0f, 184.0f));
+	position_g.push_back(Vector2(360.0f, 184.0f));
+	position_g.push_back(Vector2(376.0f, 184.0f));
+	position_g.push_back(Vector2(392.0f, 184.0f));
+	position_g.push_back(Vector2(408.0f, 184.0f));
+	position_g.push_back(Vector2(424.0f, 184.0f));
+	position_g.push_back(Vector2(440.0f, 184.0f));
+
+
+	position_b.push_back(Vector2(72.0f, 200.0f));
+	position_b.push_back(Vector2(88.0f, 200.0f));
+	position_b.push_back(Vector2(136.0f, 200.0f));
+	position_b.push_back(Vector2(152.0f, 200.0f));
+	position_g.push_back(Vector2(328.0f, 200.0f));
+	position_g.push_back(Vector2(344.0f, 200.0f));
+	position_g.push_back(Vector2(360.0f, 200.0f));
+	position_g.push_back(Vector2(376.0f, 200.0f));
+	position_g.push_back(Vector2(392.0f, 200.0f));
+	position_g.push_back(Vector2(408.0f, 200.0f));
+	position_g.push_back(Vector2(424.0f, 200.0f));
+	position_g.push_back(Vector2(440.0f, 200.0f));
+
+
+	position_g.push_back(Vector2(328.0f, 216.0f));
+	position_g.push_back(Vector2(344.0f, 216.0f));
+	position_g.push_back(Vector2(360.0f, 216.0f));
+	position_g.push_back(Vector2(376.0f, 216.0f));
+	position_g.push_back(Vector2(392.0f, 216.0f));
+	position_g.push_back(Vector2(408.0f, 216.0f));
+	position_g.push_back(Vector2(424.0f, 216.0f));
+	position_g.push_back(Vector2(440.0f, 216.0f));
+
+
+	position_g.push_back(Vector2(72.0f, 232.0f));
+	position_g.push_back(Vector2(88.0f, 232.0f));
+	position_c.push_back(Vector2(232.0f, 232.0f));
+	position_c.push_back(Vector2(248.0f, 232.0f));
+	position_c.push_back(Vector2(264.0f, 232.0f));
+	position_c.push_back(Vector2(280.0f, 232.0f));
+	position_c.push_back(Vector2(296.0f, 232.0f));
+	position_c.push_back(Vector2(312.0f, 232.0f));
+	position_g.push_back(Vector2(392.0f, 232.0f));
+	position_g.push_back(Vector2(408.0f, 232.0f));
+
+
+	position_g.push_back(Vector2(72.0f, 248.0f));
+	position_g.push_back(Vector2(88.0f, 248.0f));
+	position_c.push_back(Vector2(232.0f, 248.0f));
+	position_c.push_back(Vector2(248.0f, 248.0f));
+	position_c.push_back(Vector2(264.0f, 248.0f));
+	position_c.push_back(Vector2(280.0f, 248.0f));
+	position_c.push_back(Vector2(296.0f, 248.0f));
+	position_c.push_back(Vector2(312.0f, 248.0f));
+	position_g.push_back(Vector2(392.0f, 248.0f));
+	position_g.push_back(Vector2(408.0f, 248.0f));
+
+
+	position_g.push_back(Vector2(40.0f, 264.0f));
+	position_g.push_back(Vector2(56.0f, 264.0f));
+	position_g.push_back(Vector2(72.0f, 264.0f));
+	position_g.push_back(Vector2(88.0f, 264.0f));
+	position_g.push_back(Vector2(104.0f, 264.0f));
+	position_g.push_back(Vector2(120.0f, 264.0f));
+	position_g.push_back(Vector2(136.0f, 264.0f));
+	position_g.push_back(Vector2(152.0f, 264.0f));
+	position_b.push_back(Vector2(232.0f, 264.0f));
+	position_b.push_back(Vector2(248.0f, 264.0f));
+	position_b.push_back(Vector2(408.0f, 264.0f));
+
+
+	position_g.push_back(Vector2(40.0f, 280.0f));
+	position_g.push_back(Vector2(56.0f, 280.0f));
+	position_g.push_back(Vector2(72.0f, 280.0f));
+	position_g.push_back(Vector2(88.0f, 280.0f));
+	position_g.push_back(Vector2(104.0f, 280.0f));
+	position_g.push_back(Vector2(120.0f, 280.0f));
+	position_g.push_back(Vector2(136.0f, 280.0f));
+	position_g.push_back(Vector2(152.0f, 280.0f));
+	position_b.push_back(Vector2(232.0f, 280.0f));
+	position_b.push_back(Vector2(248.0f, 280.0f));
+	position_b.push_back(Vector2(408.0f, 280.0f));
+
+
+	position_g.push_back(Vector2(40.0f, 296.0f));
+	position_g.push_back(Vector2(56.0f, 296.0f));
+	position_g.push_back(Vector2(72.0f, 296.0f));
+	position_g.push_back(Vector2(88.0f, 296.0f));
+	position_g.push_back(Vector2(104.0f, 296.0f));
+	position_g.push_back(Vector2(120.0f, 296.0f));
+	position_g.push_back(Vector2(136.0f, 296.0f));
+	position_g.push_back(Vector2(152.0f, 296.0f));
+	position_b.push_back(Vector2(168.0f, 296.0f));
+	position_b.push_back(Vector2(184.0f, 296.0f));
+	position_b.push_back(Vector2(200.0f, 296.0f));
+	position_b.push_back(Vector2(216.0f, 296.0f));
+	position_b.push_back(Vector2(232.0f, 296.0f));
+	position_b.push_back(Vector2(248.0f, 296.0f));
+	position_b.push_back(Vector2(328.0f, 296.0f));
+	position_b.push_back(Vector2(344.0f, 296.0f));
+	position_b.push_back(Vector2(408.0f, 296.0f));
+
 
 
 	// ------------------------------
@@ -95,14 +329,7 @@ void TestScene::Update()
 		grass->Update();
 	}
 	
-	if (_player->GetBullet() != nullptr && _headQuarter->IsCollision_Bullet(_player->GetBullet()))
-	{
-		_headQuarter->isActive = false;
-		_player->GetBullet()->isActive = false;
-	}
 	_headQuarter->Update();
-
-	_player->Update();
 }
 
 void TestScene::PreRender()
@@ -113,7 +340,6 @@ void TestScene::PreRender()
 void TestScene::Render()
 {
 	_headQuarter->Render();
-	_player->Render();
 	for (auto brick : _bricks)
 	{
 		brick->Render();
@@ -141,7 +367,7 @@ void TestScene::Save_B()
 	if (debug == false)
 		return;
 	
-	BinaryWriter writer = BinaryWriter(L"Save/Stage2_B.map");
+	BinaryWriter writer = BinaryWriter(L"Save/Stage3_B.map");
 	
 	vector<Vector2> temp;
 	for (int i = 0; i < _bricks.size(); i++)
@@ -158,7 +384,7 @@ void TestScene::Save_C()
 	if (debug == false)
 		return;
 	
-	BinaryWriter writer = BinaryWriter(L"Save/Stage2_C.map");
+	BinaryWriter writer = BinaryWriter(L"Save/Stage3_C.map");
 	
 	vector<Vector2> temp;
 	for (int i = 0; i < _concretes.size(); i++)
@@ -175,7 +401,7 @@ void TestScene::Save_G()
 	if (debug == false)
 		return;
 
-	BinaryWriter writer = BinaryWriter(L"Save/Stage2_G.map");
+	BinaryWriter writer = BinaryWriter(L"Save/Stage3_G.map");
 
 	vector<Vector2> temp;
 	for (int i = 0; i < _grasses.size(); i++)

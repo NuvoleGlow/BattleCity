@@ -29,7 +29,6 @@ public:
 private:
 	shared_ptr<HeadQuarter> _headQuarter;
 	shared_ptr<Frame> _backGround;
-	shared_ptr<PlayerTank> _player;
 
 	vector<shared_ptr<Brick>> _bricks;
 	vector<shared_ptr<Concrete>> _concretes;

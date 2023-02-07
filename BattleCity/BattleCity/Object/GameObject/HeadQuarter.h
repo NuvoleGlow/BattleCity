@@ -1,7 +1,5 @@
 #pragma once
 
-class Bullet;
-
 class HeadQuarter
 {
 public:
@@ -11,9 +9,7 @@ public:
 	void Update();
 	void Render();
 
-	shared_ptr<Quad> GetQuad() { return _quad; }
-
-	bool IsCollision_Bullet(shared_ptr<Bullet> bullet);
+	shared_ptr<Collider> GetCollider() { return _collider; }
 
 	bool isActive = true;
 

@@ -1,4 +1,10 @@
 #pragma once
+
+class Brick;
+class Concrete;
+class PlayerTank;
+class HeadQuarter;
+
 class EnemyTank
 {
 public:
@@ -13,12 +19,17 @@ public:
 	void Render();
 
 	void Shot();
+	void Attack_P(shared_ptr<PlayerTank> player);
+	void Attack_B(shared_ptr<Brick> brick);
+	void Attack_C(shared_ptr<Concrete> concrete);
+	void Attack_E(shared_ptr<EnemyTank> enemy);
+	void Attack_H(shared_ptr<HeadQuarter> headQuarter);
 
-	shared_ptr<Bullet> GetBullet();
+	int& MinusHP() { return _hp -= 1; }
 	shared_ptr<Sprite> GetSprite() { return _sprite; }
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
-	bool IsCollision_Bullet(shared_ptr<class Bullet> bullet);
+	bool CheckAlive();
 	bool isActive = false;
 
 private:
@@ -28,9 +39,13 @@ private:
 	shared_ptr<Action> _action;
 	shared_ptr<Bullet> _bullet;
 
+	Vector2 _dir = { 0.0f, 0.0f };
 	float _speed = 64.0f;
 	int _hp = 1;
 
 	const float _fireDelay = 2.5f;
 	float _fireCheck = 0.0f;
+
+	const float _moveDelay = 2.5f;
+	float _moveCheck = 0.0f;
 };

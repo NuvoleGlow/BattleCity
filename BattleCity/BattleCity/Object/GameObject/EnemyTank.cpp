@@ -1,6 +1,10 @@
 #include "framework.h"
 
 #include "Bullet.h"
+#include "PlayerTank.h"
+#include "Concrete.h"
+#include "Brick.h"
+#include "HeadQuarter.h"
 
 #include "EnemyTank.h"
 
@@ -46,6 +50,35 @@ void EnemyTank::CreateAction(wstring file, float speed, Action::Type type)
 
 void EnemyTank::Input()
 {
+	int direction = rand() % 4;
+	if (direction == 0)
+	{
+		if (_collider->GetTransform()->GetPos().x < 47.0f)
+			return;
+		_collider->GetTransform()->GetAngle() = PI * 0.5f;
+		_dir = { -1.0f, 0.0f };
+	}
+	if (direction == 1)
+	{
+		if (_collider->GetTransform()->GetPos().x > 433.0f)
+			return;
+		_collider->GetTransform()->GetAngle() = PI * 1.5f;
+		_dir = { 1.0f, 0.0f };
+	}
+	if (direction == 2)
+	{
+		if (_collider->GetTransform()->GetPos().y > 433.0f)
+			return;
+		_collider->GetTransform()->GetAngle() = PI * 0.0f;
+		_dir = { 0.0f, 1.0f };
+	}
+	if (direction == 3)
+	{
+		if (_collider->GetTransform()->GetPos().y < 47.0f)
+			return;
+		_collider->GetTransform()->GetAngle() = PI * 1.0f;
+		_dir = { 0.0f, -1.0f };
+	}
 }
 
 void EnemyTank::Init()
@@ -54,13 +87,19 @@ void EnemyTank::Init()
 
 void EnemyTank::Update()
 {
-	if (isActive == false || _hp <= 0)
+	if (CheckAlive() == false)
 		return;
-	
-	Input();
 
 	_fireCheck += DELTA_TIME;
+	_moveCheck += DELTA_TIME;
 
+	_collider->GetTransform()->GetPos() += _dir * DELTA_TIME * _speed;
+	if (_moveCheck > _moveDelay)
+	{
+		_moveCheck = 0.0f;
+		Input();
+	}
+	Shot();
 	_sprite->Update();
 	_action->Update();
 	_firePos->Update();
@@ -70,7 +109,7 @@ void EnemyTank::Update()
 
 void EnemyTank::Render()
 {
-	if (isActive == false || _hp <= 0)
+	if (CheckAlive() == false)
 		return;
 
 	_sprite->SetSpriteAction(_action->GetCurClip());
@@ -86,29 +125,79 @@ void EnemyTank::Shot()
 	{
 		_fireCheck = 0.0f;
 		_bullet->isActive = true;
-		_bullet->SetDirection((_firePos->GetWorldPos() - _sprite->GetTransform()->GetWorldPos()).Normal());
-		_bullet->GetTransform()->GetPos() = _firePos->GetWorldPos();
-		_bullet->GetTransform()->GetAngle() = _sprite->GetTransform()->GetAngle();
-		_bullet->GetTransform()->SetSRT();
+		_bullet->SetDirection(_dir);
+		_bullet->GetCollider()->GetTransform()->GetPos() = _firePos->GetWorldPos();
+		_bullet->GetCollider()->GetTransform()->GetAngle() = _collider->GetTransform()->GetAngle();
+		_bullet->GetCollider()->GetTransform()->SetSRT();
 	}
 	else
 		return;
 }
 
-shared_ptr<Bullet> EnemyTank::GetBullet()
+void EnemyTank::Attack_P(shared_ptr<PlayerTank> player)
 {
-	if (_bullet->isActive == false)
-		return nullptr;
-
-	return _bullet;
+	if (player == nullptr || player->isActive == false)
+		return;
+	if (_bullet->IsCollision(player->GetCollider()))
+	{
+		_bullet->isActive = false;
+		player->MinusHP();
+	}
 }
 
-bool EnemyTank::IsCollision_Bullet(shared_ptr<class Bullet> bullet)
+void EnemyTank::Attack_B(shared_ptr<Brick> brick)
 {
-	if (_collider->IsCollision(bullet->GetCollider()))
+	if (brick == nullptr || brick->isActive == false)
+		return;
+	if (_bullet->IsCollision(brick->GetCollider()))
 	{
-		_hp--;
-		return true;
+		_bullet->isActive = false;
+		brick->GetCollider()->isActive = false;
+		brick->isActive = false;
 	}
-	return false;
+}
+
+void EnemyTank::Attack_C(shared_ptr<Concrete> concrete)
+{
+	if (concrete == nullptr)
+		return;
+	if (_bullet->IsCollision(concrete->GetCollider()))
+	{
+		_bullet->isActive = false;
+	}
+}
+
+void EnemyTank::Attack_E(shared_ptr<EnemyTank> enemy)
+{
+	if (enemy == nullptr || enemy->isActive == false)
+		return;
+	if (_bullet->IsCollision(enemy->GetCollider()))
+	{
+		_bullet->isActive = false;
+		enemy->MinusHP();
+	}
+}
+
+void EnemyTank::Attack_H(shared_ptr<HeadQuarter> headQuarter)
+{
+	if (headQuarter == nullptr || headQuarter->isActive == false)
+		return;
+	if (_bullet->IsCollision(headQuarter->GetCollider()))
+	{
+		_bullet->isActive = false;
+		headQuarter->GetCollider()->isActive = false;
+		headQuarter->isActive = false;
+	}
+}
+
+bool EnemyTank::CheckAlive()
+{
+	if (isActive == false || _hp <= 0)
+	{
+		_collider->isActive = false;
+		isActive = false;
+		_hp = 0;
+		return false;
+	}
+	return true;
 }

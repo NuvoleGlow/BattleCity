@@ -11,9 +11,7 @@ public:
 	void SetDirection(Vector2 dir);
 
 	bool IsCollision(shared_ptr<Collider> collider);
-	bool IsCollision(shared_ptr<class Brick> brick);
 
-	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
 	bool isActive = false;

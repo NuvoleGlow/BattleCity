@@ -1,7 +1,4 @@
 #include "framework.h"
-
-#include "Bullet.h"
-
 #include "Brick.h"
 
 Brick::Brick()
@@ -30,10 +27,4 @@ void Brick::Render()
 		return;
 
 	_quad->Render();
-	// _collider->Render();
-}
-
-bool Brick::IsCollision_Bullet(shared_ptr<Bullet> bullet)
-{
-	return _collider->IsCollision(bullet->GetCollider());
 }

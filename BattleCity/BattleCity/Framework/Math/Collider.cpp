@@ -50,7 +50,7 @@ void Collider::SetGREEN()
 
 bool Collider::IsCollision(shared_ptr<Collider> col)
 {
-    if (isActive == false)
+    if (isActive == false || col->isActive == false)
         return false;
 
     switch (col->GetType())

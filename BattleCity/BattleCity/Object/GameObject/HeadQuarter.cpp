@@ -1,15 +1,12 @@
 #include "framework.h"
-
-#include "Bullet.h"
-
 #include "HeadQuarter.h"
 
 HeadQuarter::HeadQuarter()
 {
-	_quad = make_shared<Quad>(L"Resource/Texture/HeadQuarter.png", Vector2(32.0f, 32.0f));
 	_collider = make_shared<CircleCollider>(16.0f);
-	_collider->GetTransform()->SetParent(_quad->GetTransform());
-	_quad->GetTransform()->SetPos(Vector2(240.0f, 48.0f));
+	_quad = make_shared<Quad>(L"Resource/Texture/HeadQuarter.png", Vector2(32.0f, 32.0f));
+	_quad->GetTransform()->SetParent(_collider->GetTransform());
+	_collider->GetTransform()->SetPos(Vector2(240.0f, 48.0f));
 }
 
 HeadQuarter::~HeadQuarter()
@@ -21,8 +18,8 @@ void HeadQuarter::Update()
 	if (isActive == false)
 		return;
 
-	_quad->Update();
 	_collider->Update();
+	_quad->Update();
 }
 
 void HeadQuarter::Render()
@@ -31,13 +28,4 @@ void HeadQuarter::Render()
 		return;
 
 	_quad->Render();
-	// _collider->Render();
-}
-
-bool HeadQuarter::IsCollision_Bullet(shared_ptr<Bullet> bullet)
-{
-	if (isActive == false)
-		return false;
-
-	return _collider->IsCollision(bullet->GetCollider());
 }

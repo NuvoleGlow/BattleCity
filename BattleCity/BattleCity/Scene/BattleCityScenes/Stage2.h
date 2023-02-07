@@ -36,8 +36,6 @@ private:
 	vector<shared_ptr<EnemyTank>> _tanks;
 	vector<shared_ptr<Grass>> _grasses;
 
-	bool debug = false;
-
 	const float _createDelay = 5.0f;
 	float _createCheck = 0.0f;
 	int _count = 0;

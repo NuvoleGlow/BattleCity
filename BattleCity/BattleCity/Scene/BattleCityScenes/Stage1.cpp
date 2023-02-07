@@ -16,15 +16,15 @@ Stage1::Stage1()
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
 		enemy->GetCollider()->GetTransform()->SetPos(Vector2(464.0f, 240.0f));
 		_tanks.push_back(enemy);
 	}
 
-	Load_C();
 	Load_B();
+	Load_C();
 }
 
 Stage1::~Stage1()
@@ -34,47 +34,39 @@ Stage1::~Stage1()
 void Stage1::Update()
 {
 	_createCheck += DELTA_TIME;
-	CreateTank();
 
-	if (_player->GetBullet() != nullptr && _headQuarter->IsCollision_Bullet(_player->GetBullet()))
-	{
-		_headQuarter->isActive = false;
-		_player->GetBullet()->isActive = false;
-	}
-
-	for (auto brick : _bricks)
-	{
-		if (_player->GetBullet() != nullptr && brick->IsCollision_Bullet(_player->GetBullet()))
-		{
-			brick->isActive = false;
-			brick->GetCollider()->isActive = false;
-			_player->GetBullet()->isActive = false;
-		}
-		brick->GetCollider()->Block(_player->GetCollider());
-		brick->Update();
-	}
-	for (auto concrete : _concretes)
-	{
-		if (_player->GetBullet() != nullptr && concrete->IsCollision_Bullet(_player->GetBullet()))
-		{
-			_player->GetBullet()->isActive = false;
-		}
-		concrete->GetCollider()->Block(_player->GetCollider());
-		concrete->Update();
-	}
 	for (auto enemy : _tanks)
 	{
-		if (_player->GetBullet() != nullptr && enemy->IsCollision_Bullet(_player->GetBullet()))
+		for (auto brick : _bricks)
 		{
-			enemy->IsCollision_Bullet(_player->GetBullet());
-			enemy->GetCollider()->isActive = false;
-			_player->GetBullet()->isActive = false;
+			brick->GetCollider()->Block(enemy->GetCollider());
+			brick->GetCollider()->Block(_player->GetCollider());
+			_player->Attack_B(brick);
+			enemy->Attack_B(brick);
+			brick->Update();
 		}
-		enemy->GetCollider()->Block(_player->GetCollider());
-		enemy->Update();
+		for (auto concrete : _concretes)
+		{
+			concrete->GetCollider()->Block(enemy->GetCollider());
+			concrete->GetCollider()->Block(_player->GetCollider());
+			_player->Attack_C(concrete);
+			enemy->Attack_C(concrete);
+			concrete->Update();
+		}
+
+		{
+			enemy->GetCollider()->Block(_player->GetCollider());
+			_player->Attack_E(enemy);
+			_player->Attack_H(_headQuarter);
+			enemy->Attack_P(_player);
+			enemy->Attack_H(_headQuarter);
+			enemy->Update();
+			_player->Update();
+			_headQuarter->Update();
+		}
 	}
-	_headQuarter->Update();
-	_player->Update();
+
+	CreateTank();
 
 	if (GameEnd() == true)
 	{
@@ -112,13 +104,10 @@ void Stage1::Render()
 
 void Stage1::CreateTank()
 {
-	if (_createCheck < _createDelay)
+	if (_createCheck < _createDelay || _count >= 1)
 		return;
 	else
 		_createCheck = 0.0f;
-
-	if (_count == 20)
-		return;
 
 	for (auto enemy : _tanks)
 	{
@@ -183,7 +172,7 @@ bool Stage1::GameEnd()
 
 bool Stage1::StageClear()
 {
-	if (_count == 20)
+	if (_count >= 1)
 	{
 		for (auto enemy : _tanks)
 		{
