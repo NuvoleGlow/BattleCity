@@ -48,46 +48,81 @@ void EnemyTank::CreateAction(wstring file, float speed, Action::Type type)
 
 void EnemyTank::Input()
 {
-	int direction = rand() % 4;
-	if (direction == 0)
+	if (_collider->GetTransform()->GetPos().x < 48.0f)
 	{
-		if (_collider->GetTransform()->GetPos().x < 48.0f)
-		{
-			_collider->GetTransform()->GetPos().x = 48.0f;
-			return;
-		}
-		_collider->GetTransform()->GetAngle() = PI * 0.5f;
-		_dir = { -1.0f, 0.0f };
+		_collider->GetTransform()->GetPos().x = 48.0f;
 	}
-	if (direction == 1)
+	if (_collider->GetTransform()->GetPos().x > 432.0f)
 	{
-		if (_collider->GetTransform()->GetPos().x > 432.0f)
-		{
-			_collider->GetTransform()->GetPos().x = 432.0f;
-			return;
-		}
-		_collider->GetTransform()->GetAngle() = PI * 1.5f;
-		_dir = { 1.0f, 0.0f };
+		_collider->GetTransform()->GetPos().x = 432.0f;
 	}
-	if (direction == 2)
+	if (_collider->GetTransform()->GetPos().y > 432.0f)
 	{
-		if (_collider->GetTransform()->GetPos().y > 432.0f)
-		{
-			_collider->GetTransform()->GetPos().y = 432.0f;
-			return;
-		}
-		_collider->GetTransform()->GetAngle() = PI * 0.0f;
-		_dir = { 0.0f, 1.0f };
+		_collider->GetTransform()->GetPos().y = 432.0f;
 	}
-	if (direction == 3)
+	if (_collider->GetTransform()->GetPos().y < 48.0f)
 	{
-		if (_collider->GetTransform()->GetPos().y < 48.0f)
+		_collider->GetTransform()->GetPos().y = 48.0f;
+	}
+	if (_moveCheck > _moveDelay)
+	{
+		_moveCheck = 0.0f;
+
+		int direction = rand() % 4;
+		if (direction == 0)
 		{
-			_collider->GetTransform()->GetPos().y = 48.0f;
+			_collider->GetTransform()->GetAngle() = PI * 0.5f;
+			_dir = { -1.0f, 0.0f };
 			return;
 		}
-		_collider->GetTransform()->GetAngle() = PI * 1.0f;
-		_dir = { 0.0f, -1.0f };
+		if (direction == 1)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 1.5f;
+			_dir = { 1.0f, 0.0f };
+			return;
+		}
+		if (direction == 2)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 0.0f;
+			_dir = { 0.0f, 1.0f };
+			return;
+		}
+		if (direction == 3)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 1.0f;
+			_dir = { 0.0f, -1.0f };
+			return;
+		}
+	}
+
+	if (_autoCheck > _autoDelay)
+	{
+		_autoCheck = 0.0f;
+		_dir = (Vector2(0.0f, 0.0f) - _collider->GetTransform()->GetWorldPos() + Vector2(240.0f, 36.0f));
+		if (_dir.Angle() >= -0.25f * PI && _dir.Angle() < 0.25f * PI)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 1.5f;
+			_dir = { 1.0f, 0.0f };
+			return;
+		}
+		if (_dir.Angle() >= 0.25f * PI && _dir.Angle() < 0.75f * PI)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 0.0f;
+			_dir = { 0.0f, 1.0f };
+			return;
+		}
+		if (_dir.Angle() >= 0.75f * PI || _dir.Angle() < -0.75f * PI)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 0.5f;
+			_dir = { -1.0f, 0.0f };
+			return;
+		}
+		if (_dir.Angle() >= -0.75f * PI && _dir.Angle() < -0.25f * PI)
+		{
+			_collider->GetTransform()->GetAngle() = PI * 1.0f;
+			_dir = { 0.0f, -1.0f };
+			return;
+		}
 	}
 }
 
@@ -97,17 +132,17 @@ void EnemyTank::Init()
 
 void EnemyTank::Update()
 {
+	_fireCheck += DELTA_TIME;
+	_moveCheck += DELTA_TIME;
+	_autoCheck += DELTA_TIME;
+
+	_bullet->Update();
+
 	if (isActive == false)
 		return;
 
-	_fireCheck += DELTA_TIME;
-	_moveCheck += DELTA_TIME;
+	Input();
 
-	if (_moveCheck > _moveDelay)
-	{
-		_moveCheck = 0.0f;
-		Input();
-	}
 	if (_collider->GetTransform()->GetPos().x >= 48.0f && _collider->GetTransform()->GetPos().x <= 432.0f)
 	{
 		if (_collider->GetTransform()->GetPos().y >= 48.0f && _collider->GetTransform()->GetPos().y <= 432.0f)
@@ -120,18 +155,18 @@ void EnemyTank::Update()
 	_action->Update();
 	_firePos->Update();
 	_collider->Update();
-	_bullet->Update();
 	CheckAlive();
 }
 
 void EnemyTank::Render()
 {
+	_bullet->Render();
+
 	if (isActive == false)
 		return;
 
 	_sprite->SetSpriteAction(_action->GetCurClip());
 	_sprite->Render();
-	_bullet->Render();
 }
 
 void EnemyTank::Shot()
@@ -143,7 +178,7 @@ void EnemyTank::Shot()
 		_fireCheck = 0.0f;
 		_bullet->isActive = true;
 		_bullet->SetDirection(_dir);
-		_bullet->GetCollider()->GetTransform()->GetPos() = _firePos->GetWorldPos();
+		_bullet->GetCollider()->GetTransform()->GetPos() = _collider->GetTransform()->GetWorldPos();
 		_bullet->GetCollider()->GetTransform()->GetAngle() = _collider->GetTransform()->GetAngle();
 		_bullet->GetCollider()->GetTransform()->SetSRT();
 	}

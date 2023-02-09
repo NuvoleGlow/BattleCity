@@ -34,6 +34,8 @@ public:
 	float Angle() const;
 	void Angle(const float& angle);
 
+	int Manhattan(const Vector2& other);
+
 	static Vector2 TransformCoord(const Vector2& vector, const XMMATRIX& matrix);
 
 };

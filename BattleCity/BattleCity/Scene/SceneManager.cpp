@@ -4,6 +4,7 @@
 #include "BattleCityScenes/TestScene.h"
 #include "BattleCityScenes/Stage1.h"
 #include "BattleCityScenes/Stage2.h"
+#include "BattleCityScenes/Stage3.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 
@@ -15,6 +16,8 @@ SceneManager::SceneManager()
 	_sceneTable[1] = stage1;
 	shared_ptr<Scene> stage2 = make_shared<Stage2>();
 	_sceneTable[2] = stage2;
+	shared_ptr<Scene> stage3 = make_shared<Stage3>();
+	_sceneTable[3] = stage3;
 
 	_curScene = test;
 }

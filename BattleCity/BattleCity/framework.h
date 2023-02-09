@@ -23,6 +23,8 @@
 #include <string>
 #include <map>
 #include <unordered_map>
+#include <stack>
+#include <queue>
 #include <algorithm>
 #include <wrl/client.h>
 #include <functional>

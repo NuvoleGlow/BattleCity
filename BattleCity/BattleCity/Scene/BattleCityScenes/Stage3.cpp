@@ -2,23 +2,22 @@
 
 #include "Object/GameObject/Frame.h"
 #include "Object/GameObject/HeadQuarter.h"
-#include "Object/GameObject/Brick.h"
 #include "Object/GameObject/PlayerTank.h"
-#include "Object/GameObject/Bullet.h"
-#include "Object/GameObject/Concrete.h"
 #include "Object/GameObject/EnemyTank.h"
+#include "Object/GameObject/Bullet.h"
+#include "Object/GameObject/Brick.h"
+#include "Object/GameObject/Concrete.h"
+#include "Object/GameObject/Grass.h"
 
-#include "Stage1.h"
+#include "Stage3.h"
 
-Stage1::Stage1()
+Stage3::Stage3()
 {
-	srand((unsigned int)time(NULL));
-
 	_backGround = make_shared<Frame>();
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
 		enemy->GetCollider()->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
@@ -27,13 +26,14 @@ Stage1::Stage1()
 
 	Load_B();
 	Load_C();
+	Load_G();
 }
 
-Stage1::~Stage1()
+Stage3::~Stage3()
 {
 }
 
-void Stage1::Update()
+void Stage3::Update()
 {
 	_createCheck += DELTA_TIME;
 
@@ -76,6 +76,11 @@ void Stage1::Update()
 
 	_player->Update();
 	_headQuarter->Update();
+	for (auto grass : _grasses)
+	{
+		grass->Update();
+	}
+
 	if (GameEnd() == true)
 	{
 		SCENE->ChangeScene(0);
@@ -83,16 +88,16 @@ void Stage1::Update()
 
 	if (StageClear() == true)
 	{
-		SCENE->ChangeScene(2);
+		SCENE->ChangeScene(4);
 	}
 }
 
-void Stage1::PreRender()
+void Stage3::PreRender()
 {
 	_backGround->Render();
 }
 
-void Stage1::Render()
+void Stage3::Render()
 {
 	_headQuarter->Render();
 	_player->Render();
@@ -108,23 +113,27 @@ void Stage1::Render()
 	{
 		concrete->Render();
 	}
+	for (auto grass : _grasses)
+	{
+		grass->Render();
+	}
 }
 
-void Stage1::CreateTank()
+void Stage3::CreateTank()
 {
 	if (_createCheck < _createDelay || _count >= _tanks.size())
 		return;
 	else
 		_createCheck = 0.0f;
 
-	_tanks[_count]->isActive = true;
 	_tanks[_count]->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand()));
+	_tanks[_count]->isActive = true;
 	_count += 1;
 }
 
-void Stage1::Load_B()
+void Stage3::Load_B()
 {
-	BinaryReader reader = BinaryReader(L"Save/Stage1_B.map");
+	BinaryReader reader = BinaryReader(L"Save/Stage3_B.map");
 
 	vector<Vector2> temp;
 	UINT size = reader.UInt();
@@ -141,9 +150,9 @@ void Stage1::Load_B()
 	}
 }
 
-void Stage1::Load_C()
+void Stage3::Load_C()
 {
-	BinaryReader reader = BinaryReader(L"Save/Stage1_C.map");
+	BinaryReader reader = BinaryReader(L"Save/Stage3_C.map");
 
 	vector<Vector2> temp;
 	UINT size = reader.UInt();
@@ -160,7 +169,26 @@ void Stage1::Load_C()
 	}
 }
 
-bool Stage1::GameEnd()
+void Stage3::Load_G()
+{
+	BinaryReader reader = BinaryReader(L"Save/Stage3_G.map");
+
+	vector<Vector2> temp;
+	UINT size = reader.UInt();
+	temp.resize(size);
+
+	void* ptr = temp.data();
+	reader.Byte(&ptr, sizeof(Vector2) * size);
+
+	for (int i = 0; i < temp.size(); i++)
+	{
+		shared_ptr<Grass> grass = make_shared<Grass>();
+		grass->GetQuad()->GetTransform()->SetPos(temp[i]);
+		_grasses.push_back(grass);
+	}
+}
+
+bool Stage3::GameEnd()
 {
 	if (_headQuarter->isActive == false)
 		return true;
@@ -171,7 +199,7 @@ bool Stage1::GameEnd()
 	return false;
 }
 
-bool Stage1::StageClear()
+bool Stage3::StageClear()
 {
 	if (_count >= _tanks.size())
 	{

@@ -137,6 +137,11 @@ void Vector2::Angle(const float& angle)
     y = y * sin(angle);
 }
 
+int Vector2::Manhattan(const Vector2& other)
+{
+    return (int)(other.x - x) + (int)(other.y - y);
+}
+
 Vector2 Vector2::TransformCoord(const Vector2& vector, const XMMATRIX& matrix)
 {
     XMVECTOR temp = XMLoadFloat2(&vector);

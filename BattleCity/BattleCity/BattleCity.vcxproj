@@ -199,6 +199,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\BattleCityScenes\Stage1.h" />
     <ClInclude Include="Scene\BattleCityScenes\Stage2.h" />
+    <ClInclude Include="Scene\BattleCityScenes\Stage3.h" />
     <ClInclude Include="Scene\BattleCityScenes\TestScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="Program\Program.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\Stage1.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\Stage2.cpp" />
+    <ClCompile Include="Scene\BattleCityScenes\Stage3.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\TestScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -266,6 +268,7 @@
     <Image Include="Resource\Texture\Brick.png" />
     <Image Include="Resource\Texture\Bullet.png" />
     <Image Include="Resource\Texture\Concrete.png" />
+    <Image Include="Resource\Texture\EnemyTank.png" />
     <Image Include="Resource\Texture\Field.png" />
     <Image Include="Resource\Texture\Frame.png" />
     <Image Include="Resource\Texture\HeadQuarter.png" />

@@ -8,6 +8,34 @@ class HeadQuarter;
 class EnemyTank
 {
 public:
+
+	struct Vertex
+	{
+		Vertex() {}
+		Vertex(Vector2 pos, float g, float h) : pos(pos), g(g), h(h) { f = g + h; }
+
+		Vector2 pos = Vector2(0, 0);
+		float g = 0;
+		float h = 0;
+		float f = 0;
+
+		bool operator<(const Vertex& other) const
+		{
+			if (f < other.f)
+				return true;
+
+			return false;
+		}
+
+		bool operator>(const Vertex& other) const
+		{
+			if (f > other.f)
+				return true;
+
+			return false;
+		}
+	};
+
 	EnemyTank();
 	~EnemyTank();
 
@@ -39,13 +67,17 @@ private:
 	shared_ptr<Action> _action;
 	shared_ptr<Bullet> _bullet;
 
+	vector<Vector2> _path;
 	Vector2 _dir = { 0.0f, 0.0f };
 	float _speed = 64.0f;
 	int _hp = 1;
 
-	const float _fireDelay = 2.5f;
+	const float _fireDelay = 2.0f;
 	float _fireCheck = 0.0f;
 
 	const float _moveDelay = 2.5f;
 	float _moveCheck = 0.0f;
+
+	const float _autoDelay = 7.0f;
+	float _autoCheck = 0.0f;
 };

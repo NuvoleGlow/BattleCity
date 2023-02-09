@@ -17,10 +17,10 @@ Stage2::Stage2()
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
-		enemy->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand()));
+		enemy->GetCollider()->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
 		_tanks.push_back(enemy);
 	}
 
@@ -41,6 +41,11 @@ void Stage2::Update()
 
 	for (auto enemy : _tanks)
 	{
+		for (auto collider : _backGround->GetColliders())
+		{
+			collider->Block(enemy->GetCollider());
+			collider->Block(_player->GetCollider());
+		}
 		for (auto brick : _bricks)
 		{
 			brick->GetCollider()->Block(enemy->GetCollider());
@@ -60,6 +65,7 @@ void Stage2::Update()
 
 		{
 			enemy->GetCollider()->Block(_player->GetCollider());
+			_player->GetCollider()->Block(enemy->GetCollider());
 			_player->Attack_E(enemy);
 			_player->Attack_H(_headQuarter);
 			enemy->Attack_P(_player);
@@ -82,7 +88,7 @@ void Stage2::Update()
 
 	if (StageClear() == true)
 	{
-		SCENE->ChangeScene(2);
+		SCENE->ChangeScene(3);
 	}
 }
 
@@ -119,7 +125,7 @@ void Stage2::CreateTank()
 		return;
 	else
 		_createCheck = 0.0f;
-
+	_tanks[_count]->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand()));
 	_tanks[_count]->isActive = true;
 	_count += 1;
 }
