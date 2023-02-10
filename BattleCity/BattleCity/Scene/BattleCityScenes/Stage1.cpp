@@ -27,6 +27,9 @@ Stage1::Stage1()
 
 	Load_B();
 	Load_C();
+
+	SOUND->Add("BGM", "Resource/Sound/Hooter.mp3", true);
+	SOUND->Play("BGM", 0.25f);
 }
 
 Stage1::~Stage1()

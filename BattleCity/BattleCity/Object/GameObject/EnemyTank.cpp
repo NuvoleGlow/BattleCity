@@ -16,6 +16,8 @@ EnemyTank::EnemyTank()
 	_firePos->SetParent(_collider->GetTransform());
 	_firePos->GetPos().y += 16.0f;
 	_bullet = make_shared<Bullet>();
+
+	EFFECT->AddEffect(L"Resource/Texture/Effect/Explosion.png", Vector2(5, 3), Vector2(16.0f, 16.0f), 0.01f);
 }
 
 EnemyTank::~EnemyTank()
@@ -192,6 +194,7 @@ void EnemyTank::Attack_P(shared_ptr<PlayerTank> player)
 		return;
 	if (_bullet->IsCollision(player->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		--player->GetHP();
 	}
@@ -203,6 +206,7 @@ void EnemyTank::Attack_B(shared_ptr<Brick> brick)
 		return;
 	if (_bullet->IsCollision(brick->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		brick->GetCollider()->isActive = false;
 		brick->isActive = false;
@@ -215,6 +219,7 @@ void EnemyTank::Attack_C(shared_ptr<Concrete> concrete)
 		return;
 	if (_bullet->IsCollision(concrete->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 	}
 }
@@ -225,6 +230,7 @@ void EnemyTank::Attack_E(shared_ptr<EnemyTank> enemy)
 		return;
 	if (_bullet->IsCollision(enemy->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		--enemy->GetHP();
 	}
@@ -236,6 +242,7 @@ void EnemyTank::Attack_H(shared_ptr<HeadQuarter> headQuarter)
 		return;
 	if (_bullet->IsCollision(headQuarter->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		headQuarter->GetCollider()->isActive = false;
 		headQuarter->isActive = false;

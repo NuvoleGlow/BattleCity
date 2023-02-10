@@ -268,9 +268,11 @@
     <Image Include="Resource\Texture\Brick.png" />
     <Image Include="Resource\Texture\Bullet.png" />
     <Image Include="Resource\Texture\Concrete.png" />
+    <Image Include="Resource\Texture\Effect\Explosion.png" />
     <Image Include="Resource\Texture\EnemyTank.png" />
     <Image Include="Resource\Texture\Field.png" />
     <Image Include="Resource\Texture\Frame.png" />
+    <Image Include="Resource\Texture\Grass.png" />
     <Image Include="Resource\Texture\HeadQuarter.png" />
     <Image Include="Resource\Texture\PlayerTank.png" />
     <Image Include="small.ico" />
@@ -359,6 +361,9 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\Hooter.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,6 +19,8 @@ PlayerTank::PlayerTank()
 	_collider->GetTransform()->SetPos(Vector2(176.0f, 48.0f));
 
 	_bullet = make_shared<Bullet>();
+
+	EFFECT->AddEffect(L"Resource/Texture/Effect/Explosion.png", Vector2(5, 3), Vector2(16.0f, 16.0f), 0.01f);
 }
 
 PlayerTank::~PlayerTank()
@@ -95,7 +97,7 @@ void PlayerTank::Input()
 		_collider->GetTransform()->GetAngle() = PI * 1.0f;
 		_collider->GetTransform()->GetPos().y -= DELTA_TIME * _speed;
 	}
-	if (KEY_PRESS(VK_SPACE))
+	if (KEY_UP(VK_SPACE))
 	{
 		Shot();
 	}
@@ -146,6 +148,7 @@ void PlayerTank::Attack_E(shared_ptr<EnemyTank> enemy)
 		return;
 	if (_bullet->IsCollision(enemy->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		--enemy->GetHP();
 	}
@@ -157,6 +160,7 @@ void PlayerTank::Attack_B(shared_ptr<Brick> brick)
 		return;
 	if (_bullet->IsCollision(brick->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		brick->GetCollider()->isActive = false;
 		brick->isActive = false;
@@ -169,6 +173,7 @@ void PlayerTank::Attack_C(shared_ptr<Concrete> concrete)
 		return;
 	if (_bullet->IsCollision(concrete->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 	}
 }
@@ -179,6 +184,7 @@ void PlayerTank::Attack_H(shared_ptr<HeadQuarter> headQuarter)
 		return;
 	if (_bullet->IsCollision(headQuarter->GetCollider()))
 	{
+		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		headQuarter->GetCollider()->isActive = false;
 		headQuarter->isActive = false;

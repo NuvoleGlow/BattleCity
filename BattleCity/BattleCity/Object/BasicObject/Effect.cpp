@@ -3,7 +3,7 @@
 
 Effect::Effect(wstring file, Vector2 maxFrame, Vector2 size, float speed, Action::Type type)
 {
-	_sprite = make_shared<Sprite>(file, maxFrame, size);
+	_sprite = make_shared<Sprite>(file, size, maxFrame);
 
 	CreateAction(file, maxFrame, speed, type);
 

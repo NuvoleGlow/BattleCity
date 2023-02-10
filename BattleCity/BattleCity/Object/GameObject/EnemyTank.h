@@ -78,6 +78,6 @@ private:
 	const float _moveDelay = 2.5f;
 	float _moveCheck = 0.0f;
 
-	const float _autoDelay = 7.0f;
+	const float _autoDelay = 6.0f;
 	float _autoCheck = 0.0f;
 };

@@ -22,6 +22,5 @@ private:
 
 	Vector2 _direction = { 0,0 };
 	float _speed = 128.0f;
-
 };
 

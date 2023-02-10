@@ -31,7 +31,9 @@ void Bullet::Update()
 	}
 
 	if (isActive == false)
+	{
 		return;
+	}
 
 	_collider->GetTransform()->GetPos() += _direction * _speed * DELTA_TIME;
 
@@ -57,5 +59,9 @@ bool Bullet::IsCollision(shared_ptr<Collider> collider)
 	if (isActive == false)
 		return false;
 
-	return _collider->IsCollision(collider);
+	if (_collider->IsCollision(collider))
+	{
+		return true;
+	}
+	return false;
 }
