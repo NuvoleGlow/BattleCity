@@ -1,4 +1,7 @@
 #include "framework.h"
+
+#include "Object/UserInterface/Numbers.h"
+
 #include "Frame.h"
 
 Frame::Frame()
@@ -147,6 +150,18 @@ Frame::Frame()
 		collider->GetTransform()->SetPos(post[i]);
 		_colliders.push_back(collider);
 	}
+
+	int score = _score;
+	for (int i = 0; i < 3; i++)
+	{
+		int ten = pow(10, i + 1);
+		float num = score % ten;
+		shared_ptr<Numbers> number = make_shared<Numbers>(num);
+		score /= 10;
+		Vector2 pos = { 496.0f - i * 16.0f, 48.0f };
+		number->GetSprite()->GetTransform()->SetPos(pos);
+		_scoreNumbers.push_back(number);
+	}
 }
 
 Frame::~Frame()
@@ -159,10 +174,32 @@ void Frame::Update()
 	{
 		collider->Update();
 	}
+	CountScore();
 }
 
-void Frame::Render()
+void Frame::PreRender()
 {
 	_frame->Render();
 	_field->Render();
+}
+
+void Frame::PostRender()
+{
+	for (int i = 0; i < 3; i++)
+	{
+		_scoreNumbers[i]->Render();
+	}
+}
+
+void Frame::CountScore()
+{
+	int score = _score;
+	for (int i = 0; i < 3; i++)
+	{
+		int ten = pow(10, i + 1);
+		float num = score % ten;
+		_scoreNumbers[i]->SetNumber(num);
+		score /= 10;
+		_scoreNumbers[i]->Update();
+	}
 }

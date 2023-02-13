@@ -8,34 +8,6 @@ class HeadQuarter;
 class EnemyTank
 {
 public:
-
-	struct Vertex
-	{
-		Vertex() {}
-		Vertex(Vector2 pos, float g, float h) : pos(pos), g(g), h(h) { f = g + h; }
-
-		Vector2 pos = Vector2(0, 0);
-		float g = 0;
-		float h = 0;
-		float f = 0;
-
-		bool operator<(const Vertex& other) const
-		{
-			if (f < other.f)
-				return true;
-
-			return false;
-		}
-
-		bool operator>(const Vertex& other) const
-		{
-			if (f > other.f)
-				return true;
-
-			return false;
-		}
-	};
-
 	EnemyTank();
 	~EnemyTank();
 

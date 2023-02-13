@@ -27,6 +27,7 @@ Stage3::Stage3()
 	Load_B();
 	Load_C();
 	Load_G();
+	Load_HP();
 }
 
 Stage3::~Stage3()
@@ -88,13 +89,14 @@ void Stage3::Update()
 
 	if (StageClear() == true)
 	{
+		Save_HP();
 		SCENE->ChangeScene(4);
 	}
 }
 
 void Stage3::PreRender()
 {
-	_backGround->Render();
+	_backGround->PreRender();
 }
 
 void Stage3::Render()
@@ -117,6 +119,12 @@ void Stage3::Render()
 	{
 		grass->Render();
 	}
+}
+
+void Stage3::PostRender()
+{
+	_player->PostRender();
+	_backGround->PostRender();
 }
 
 void Stage3::CreateTank()
@@ -186,6 +194,28 @@ void Stage3::Load_G()
 		grass->GetQuad()->GetTransform()->SetPos(temp[i]);
 		_grasses.push_back(grass);
 	}
+}
+
+void Stage3::Load_HP()
+{
+	BinaryReader reader = BinaryReader(L"Save/HP.hp");
+	int hp = reader.Int();
+	_player->SetHP(hp);
+}
+
+void Stage3::Save_HP()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/HP.hp");
+
+	writer.Int(_player->GetHP());
+}
+
+void Stage3::Save_Score()
+{
+}
+
+void Stage3::Load_Score()
+{
 }
 
 bool Stage3::GameEnd()

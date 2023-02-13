@@ -23,5 +23,8 @@ float4 PS(PixelInput input) : SV_TARGET
 
 	float4 result = map.Sample(samp, spriteUV);
 
+	if (result.x + result.y + result.z < 0.1f)
+		result.w = 0.0f;
+
 	return result;
 }

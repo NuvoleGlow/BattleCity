@@ -5,6 +5,7 @@
 #include "Concrete.h"
 #include "EnemyTank.h"
 #include "HeadQuarter.h"
+#include "HPCount.h"
 
 #include "PlayerTank.h"
 
@@ -15,6 +16,14 @@ PlayerTank::PlayerTank()
 	_firePos = make_shared<Transform>();
 	_firePos->SetParent(_collider->GetTransform());
 	_firePos->GetPos().y += 16.0f;
+
+	for (int i = 0; i < 5; i++)
+	{
+		shared_ptr<HPCount> lifeCount = make_shared<HPCount>();
+		Vector2 pos = { 480.0f, 416.0f - i * 32.0f };
+		lifeCount->GetQuad()->GetTransform()->SetPos(pos);
+		_lifeCount.push_back(lifeCount);
+	}
 
 	_collider->GetTransform()->SetPos(Vector2(176.0f, 48.0f));
 
@@ -115,6 +124,14 @@ void PlayerTank::Update()
 	_firePos->Update();
 	_collider->Update();
 	_bullet->Update();
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (_hp < i + 1)
+			break;
+		_lifeCount[i]->Update();
+	}
+
 	CheckAlive();
 }
 
@@ -126,6 +143,16 @@ void PlayerTank::Render()
 	_sprite->SetSpriteAction(_action->GetCurClip());
 	_sprite->Render();
 	_bullet->Render();
+}
+
+void PlayerTank::PostRender()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if (_hp < i + 1)
+			break;
+		_lifeCount[i]->Render();
+	}
 }
 
 void PlayerTank::Shot()
@@ -142,16 +169,18 @@ void PlayerTank::Shot()
 	}
 }
 
-void PlayerTank::Attack_E(shared_ptr<EnemyTank> enemy)
+bool PlayerTank::Attack_E(shared_ptr<EnemyTank> enemy)
 {
 	if (enemy == nullptr || enemy->isActive == false)
-		return;
+		return false;
 	if (_bullet->IsCollision(enemy->GetCollider()))
 	{
 		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		--enemy->GetHP();
+		return true;
 	}
+	return false;
 }
 
 void PlayerTank::Attack_B(shared_ptr<Brick> brick)

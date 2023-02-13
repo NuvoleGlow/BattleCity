@@ -27,9 +27,6 @@ Stage1::Stage1()
 
 	Load_B();
 	Load_C();
-
-	SOUND->Add("BGM", "Resource/Sound/Hooter.mp3", true);
-	SOUND->Play("BGM", 0.25f);
 }
 
 Stage1::~Stage1()
@@ -41,7 +38,6 @@ void Stage1::Update()
 	_createCheck += DELTA_TIME;
 
 	CreateTank();
-
 	for (auto enemy : _tanks)
 	{
 		for (auto collider : _backGround->GetColliders())
@@ -69,7 +65,10 @@ void Stage1::Update()
 		{
 			enemy->GetCollider()->Block(_player->GetCollider());
 			_player->GetCollider()->Block(enemy->GetCollider());
-			_player->Attack_E(enemy);
+			if (_player->Attack_E(enemy))
+			{
+				_backGround->AddScore(5);
+			}
 			_player->Attack_H(_headQuarter);
 			enemy->Attack_P(_player);
 			enemy->Attack_H(_headQuarter);
@@ -79,6 +78,8 @@ void Stage1::Update()
 
 	_player->Update();
 	_headQuarter->Update();
+	_backGround->Update();
+
 	if (GameEnd() == true)
 	{
 		SCENE->ChangeScene(0);
@@ -86,13 +87,15 @@ void Stage1::Update()
 
 	if (StageClear() == true)
 	{
+		Save_HP();
+		Save_Score();
 		SCENE->ChangeScene(2);
 	}
 }
 
 void Stage1::PreRender()
 {
-	_backGround->Render();
+	_backGround->PreRender();
 }
 
 void Stage1::Render()
@@ -113,6 +116,12 @@ void Stage1::Render()
 	}
 }
 
+void Stage1::PostRender()
+{
+	_player->PostRender();
+	_backGround->PostRender();
+}
+
 void Stage1::CreateTank()
 {
 	if (_createCheck < _createDelay || _count >= _tanks.size())
@@ -123,6 +132,20 @@ void Stage1::CreateTank()
 	_tanks[_count]->isActive = true;
 	_tanks[_count]->GetCollider()->GetTransform()->SetPos(_backGround->GetspawnPoint(rand()));
 	_count += 1;
+}
+
+void Stage1::Save_Score()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/Score.sc");
+
+	writer.Int(_backGround->GetScore());
+}
+
+void Stage1::Save_HP()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/HP.hp");
+
+	writer.Int(_player->GetHP());
 }
 
 void Stage1::Load_B()

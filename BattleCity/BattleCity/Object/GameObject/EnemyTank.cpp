@@ -197,6 +197,7 @@ void EnemyTank::Attack_P(shared_ptr<PlayerTank> player)
 		EFFECT->Play("Explosion", _bullet->GetCollider()->GetTransform()->GetWorldPos());
 		_bullet->isActive = false;
 		--player->GetHP();
+		player->GetCollider()->GetTransform()->SetPos(Vector2(176.0f, 48.0f));
 	}
 }
 

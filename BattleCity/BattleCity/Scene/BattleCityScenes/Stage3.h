@@ -17,12 +17,17 @@ public:
 	virtual void Update() override;
 	virtual void PreRender() override;
 	virtual void Render() override;
+	virtual void PostRender() override;
 
 	void CreateTank();
 
 	void Load_B();
 	void Load_C();
 	void Load_G();
+	void Load_HP();
+	void Save_HP();
+	void Save_Score();
+	void Load_Score();
 
 	bool GameEnd();
 	bool StageClear();

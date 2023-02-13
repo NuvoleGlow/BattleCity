@@ -198,6 +198,12 @@
     <ClInclude Include="Scene\BattleCityScenes\Stage3.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\GameObject\HPCount.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UserInterface\Numbers.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BattleCity.cpp">
@@ -344,6 +350,12 @@
     <ClCompile Include="Scene\BattleCityScenes\Stage3.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\GameObject\HPCount.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UserInterface\Numbers.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BattleCity.rc">
@@ -387,6 +399,12 @@
     <Image Include="Resource\Texture\Grass.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Texture\HP.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Texture\UI\Numbers.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Library\FMOD\fmod_vc.lib" />
@@ -401,6 +419,10 @@
     <None Include="Save\Stage2_B.map" />
     <None Include="Save\Stage2_C.map" />
     <None Include="Save\Stage2_G.map" />
+    <None Include="Save\Stage3_B.map" />
+    <None Include="Save\Stage3_C.map" />
+    <None Include="Save\Stage3_G.map" />
+    <None Include="Save\HP.hp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\Collider\ColliderPixelShader.hlsl" />

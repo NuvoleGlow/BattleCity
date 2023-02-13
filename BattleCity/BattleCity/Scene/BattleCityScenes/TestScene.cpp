@@ -98,7 +98,7 @@ void TestScene::Update()
 
 void TestScene::PreRender()
 {
-	_backGround->Render();
+	_backGround->PreRender();
 }
 
 void TestScene::Render()

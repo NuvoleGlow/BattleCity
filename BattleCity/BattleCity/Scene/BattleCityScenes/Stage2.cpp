@@ -27,6 +27,8 @@ Stage2::Stage2()
 	Load_B();
 	Load_C();
 	Load_G();
+	Load_HP();
+	Load_Score();
 }
 
 Stage2::~Stage2()
@@ -76,6 +78,8 @@ void Stage2::Update()
 
 	_player->Update();
 	_headQuarter->Update();
+	_backGround->Update();
+
 	for (auto grass : _grasses)
 	{
 		grass->Update();
@@ -88,13 +92,15 @@ void Stage2::Update()
 
 	if (StageClear() == true)
 	{
+		Save_HP();
+		Save_Score();
 		SCENE->ChangeScene(3);
 	}
 }
 
 void Stage2::PreRender()
 {
-	_backGround->Render();
+	_backGround->PreRender();
 }
 
 void Stage2::Render()
@@ -117,6 +123,12 @@ void Stage2::Render()
 	{
 		grass->Render();
 	}
+}
+
+void Stage2::PostRender()
+{
+	_player->PostRender();
+	_backGround->PostRender();
 }
 
 void Stage2::CreateTank()
@@ -185,6 +197,34 @@ void Stage2::Load_G()
 		grass->GetQuad()->GetTransform()->SetPos(temp[i]);
 		_grasses.push_back(grass);
 	}
+}
+
+void Stage2::Load_HP()
+{
+	BinaryReader reader = BinaryReader(L"Save/HP.hp");
+	int hp = reader.Int();
+	_player->SetHP(hp);
+}
+
+void Stage2::Save_HP()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/HP.hp");
+
+	writer.Int(_player->GetHP());
+}
+
+void Stage2::Save_Score()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/Score.sc");
+
+	writer.Int(_backGround->GetScore());
+}
+
+void Stage2::Load_Score()
+{
+	BinaryReader reader = BinaryReader(L"Save/Score.sc");
+	int sc = reader.Int();
+	_backGround->AddScore(sc);
 }
 
 bool Stage2::GameEnd()

@@ -5,6 +5,7 @@ class Bullet;
 class Concrete;
 class EnemyTank;
 class HeadQuarter;
+class HPCount;
 
 class PlayerTank
 {
@@ -18,15 +19,17 @@ public:
 	void Init();
 	void Update();
 	void Render();
+	void PostRender();
 
 	void Shot();
 	void CheckAlive();
-	void Attack_E(shared_ptr<EnemyTank> enemy);
+	bool Attack_E(shared_ptr<EnemyTank> enemy);
 	void Attack_B(shared_ptr<Brick> brick);
 	void Attack_C(shared_ptr<Concrete> concrete);
 	void Attack_H(shared_ptr<HeadQuarter> headQuarter);
 
 	int& GetHP() { return _hp; }
+	void SetHP(int hp) { _hp = hp; }
 	shared_ptr<Sprite> GetSprite() { return _sprite; }
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
@@ -38,7 +41,9 @@ private:
 	shared_ptr<Sprite> _sprite;
 	shared_ptr<Action> _action;
 	shared_ptr<Bullet> _bullet;
+	vector<shared_ptr<HPCount>> _lifeCount;
 
 	float _speed = 64.0f;
+	int _score = 0;
 	int _hp = 3;
 };
