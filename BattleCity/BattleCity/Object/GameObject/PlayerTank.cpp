@@ -28,8 +28,8 @@ PlayerTank::PlayerTank()
 	_collider->GetTransform()->SetPos(Vector2(176.0f, 48.0f));
 
 	_bullet = make_shared<Bullet>();
-
 	EFFECT->AddEffect(L"Resource/Texture/Effect/Explosion.png", Vector2(5, 3), Vector2(16.0f, 16.0f), 0.01f);
+
 }
 
 PlayerTank::~PlayerTank()

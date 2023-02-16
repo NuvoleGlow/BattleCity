@@ -19,8 +19,11 @@ public:
 	virtual void Render() override;
 	virtual void PostRender() override;
 
+	virtual void Init() override;
+
 	void CreateTank();
 
+	void Load_E();
 	void Load_B();
 	void Load_C();
 	void Load_G();
@@ -41,6 +44,7 @@ private:
 	vector<shared_ptr<EnemyTank>> _tanks;
 	vector<shared_ptr<Grass>> _grasses;
 
+	int _max = 0;
 	const float _createDelay = 5.0f;
 	float _createCheck = 0.0f;
 	int _count = 0;

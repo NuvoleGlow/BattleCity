@@ -13,21 +13,7 @@
 
 Stage3::Stage3()
 {
-	_backGround = make_shared<Frame>();
-	_headQuarter = make_shared<HeadQuarter>();
-	_player = make_shared<PlayerTank>();
-
-	for (int i = 0; i < 15; i++)
-	{
-		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
-		enemy->GetCollider()->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
-		_tanks.push_back(enemy);
-	}
-
-	Load_B();
-	Load_C();
-	Load_G();
-	Load_HP();
+	Init();
 }
 
 Stage3::~Stage3()
@@ -67,6 +53,10 @@ void Stage3::Update()
 		{
 			enemy->GetCollider()->Block(_player->GetCollider());
 			_player->GetCollider()->Block(enemy->GetCollider());
+			if (_player->Attack_E(enemy))
+			{
+				_backGround->AddScore(5);
+			}
 			_player->Attack_E(enemy);
 			_player->Attack_H(_headQuarter);
 			enemy->Attack_P(_player);
@@ -77,6 +67,8 @@ void Stage3::Update()
 
 	_player->Update();
 	_headQuarter->Update();
+	_backGround->Update();
+
 	for (auto grass : _grasses)
 	{
 		grass->Update();
@@ -90,7 +82,8 @@ void Stage3::Update()
 	if (StageClear() == true)
 	{
 		Save_HP();
-		SCENE->ChangeScene(4);
+		Save_Score();
+		SCENE->ChangeScene(404);
 	}
 }
 
@@ -127,6 +120,28 @@ void Stage3::PostRender()
 	_backGround->PostRender();
 }
 
+void Stage3::Init()
+{
+	_backGround = make_shared<Frame>();
+	_headQuarter = make_shared<HeadQuarter>();
+	_player = make_shared<PlayerTank>();
+
+	Load_E();
+	_tanks.clear();
+	for (int i = 0; i < _max; i++)
+	{
+		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
+		enemy->GetCollider()->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
+		_tanks.push_back(enemy);
+	}
+
+	Load_B();
+	Load_C();
+	Load_G();
+	Load_HP();
+	Load_Score();
+}
+
 void Stage3::CreateTank()
 {
 	if (_createCheck < _createDelay || _count >= _tanks.size())
@@ -139,6 +154,13 @@ void Stage3::CreateTank()
 	_count += 1;
 }
 
+void Stage3::Load_E()
+{
+	BinaryReader reader = BinaryReader(L"Save/E.max");
+	int max = reader.Int();
+	_max = max;
+}
+
 void Stage3::Load_B()
 {
 	BinaryReader reader = BinaryReader(L"Save/Stage3_B.map");
@@ -149,7 +171,7 @@ void Stage3::Load_B()
 
 	void* ptr = temp.data();
 	reader.Byte(&ptr, sizeof(Vector2) * size);
-
+	_bricks.clear();
 	for (int i = 0; i < temp.size(); i++)
 	{
 		shared_ptr<Brick> brick = make_shared<Brick>();
@@ -168,7 +190,7 @@ void Stage3::Load_C()
 
 	void* ptr = temp.data();
 	reader.Byte(&ptr, sizeof(Vector2) * size);
-
+	_concretes.clear();
 	for (int i = 0; i < temp.size(); i++)
 	{
 		shared_ptr<Concrete> concrete = make_shared<Concrete>();
@@ -187,7 +209,7 @@ void Stage3::Load_G()
 
 	void* ptr = temp.data();
 	reader.Byte(&ptr, sizeof(Vector2) * size);
-
+	_grasses.clear();
 	for (int i = 0; i < temp.size(); i++)
 	{
 		shared_ptr<Grass> grass = make_shared<Grass>();
@@ -212,10 +234,16 @@ void Stage3::Save_HP()
 
 void Stage3::Save_Score()
 {
+	BinaryWriter writer = BinaryWriter(L"Save/Score.sc");
+
+	writer.Int(_backGround->GetScore());
 }
 
 void Stage3::Load_Score()
 {
+	BinaryReader reader = BinaryReader(L"Save/Score.sc");
+	int sc = reader.Int();
+	_backGround->AddScore(sc);
 }
 
 bool Stage3::GameEnd()

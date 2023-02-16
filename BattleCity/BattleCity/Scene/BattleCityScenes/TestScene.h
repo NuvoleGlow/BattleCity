@@ -20,6 +20,9 @@ public:
 
 	virtual void NextScene() override;
 
+	void Save_Score();
+	void Save_HP();
+
 	void Save_B();
 	void Save_C();
 	void Save_G();

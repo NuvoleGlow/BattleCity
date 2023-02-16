@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 
 #include "BattleCityScenes/TestScene.h"
+#include "BattleCityScenes/CheckScene.h"
 #include "BattleCityScenes/Stage1.h"
 #include "BattleCityScenes/Stage2.h"
 #include "BattleCityScenes/Stage3.h"
@@ -18,6 +19,8 @@ SceneManager::SceneManager()
 	_sceneTable[2] = stage2;
 	shared_ptr<Scene> stage3 = make_shared<Stage3>();
 	_sceneTable[3] = stage3;
+	shared_ptr<Scene> CheckPoint = make_shared<CheckScene>();
+	_sceneTable[404] = CheckPoint;
 
 	_curScene = test;
 }
@@ -53,4 +56,5 @@ void SceneManager::PostRender()
 void SceneManager::ChangeScene(int sceneNumber)
 {
 	_curScene = _sceneTable[sceneNumber];
+	_sceneTable[sceneNumber]->Init();
 }

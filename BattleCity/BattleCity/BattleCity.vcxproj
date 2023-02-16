@@ -199,6 +199,7 @@
     <ClInclude Include="Object\UserInterface\Numbers.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\BattleCityScenes\CheckScene.h" />
     <ClInclude Include="Scene\BattleCityScenes\Stage1.h" />
     <ClInclude Include="Scene\BattleCityScenes\Stage2.h" />
     <ClInclude Include="Scene\BattleCityScenes\Stage3.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="Object\UserInterface\Button.cpp" />
     <ClCompile Include="Object\UserInterface\Numbers.cpp" />
     <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Scene\BattleCityScenes\CheckScene.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\Stage1.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\Stage2.cpp" />
     <ClCompile Include="Scene\BattleCityScenes\Stage3.cpp" />
@@ -374,6 +376,7 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\Hooter.mp3" />
+    <Media Include="Resource\Sound\The_Happy_Troll.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

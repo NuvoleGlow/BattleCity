@@ -54,6 +54,9 @@ TestScene::TestScene()
 		grass->GetQuad()->GetTransform()->SetPos(position_g[i]);
 		_grasses.push_back(grass);
 	}
+
+	Save_Score();
+	Save_HP();
 }
 
 TestScene::~TestScene()
@@ -123,7 +126,21 @@ void TestScene::NextScene()
 	if (debug == false)
 		return;
 
-	SCENE->ChangeScene(1);
+	SCENE->ChangeScene(404);
+}
+
+void TestScene::Save_Score()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/Score.sc");
+
+	writer.Int(0);
+}
+
+void TestScene::Save_HP()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/HP.hp");
+
+	writer.Int(3);
 }
 
 void TestScene::Save_B()

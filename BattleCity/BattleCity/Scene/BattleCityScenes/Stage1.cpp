@@ -13,20 +13,7 @@
 Stage1::Stage1()
 {
 	srand((unsigned int)time(NULL));
-
-	_backGround = make_shared<Frame>();
-	_headQuarter = make_shared<HeadQuarter>();
-	_player = make_shared<PlayerTank>();
-
-	for (int i = 0; i < 5; i++)
-	{
-		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
-		enemy->GetCollider()->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
-		_tanks.push_back(enemy);
-	}
-
-	Load_B();
-	Load_C();
+	Init();
 }
 
 Stage1::~Stage1()
@@ -89,7 +76,7 @@ void Stage1::Update()
 	{
 		Save_HP();
 		Save_Score();
-		SCENE->ChangeScene(2);
+		SCENE->ChangeScene(404);
 	}
 }
 
@@ -120,6 +107,26 @@ void Stage1::PostRender()
 {
 	_player->PostRender();
 	_backGround->PostRender();
+}
+
+void Stage1::Init()
+{
+	_backGround = make_shared<Frame>();
+	_headQuarter = make_shared<HeadQuarter>();
+	_player = make_shared<PlayerTank>();
+
+	Load_E();
+
+	_tanks.clear();
+	for (int i = 0; i < _max; i++)
+	{
+		shared_ptr<EnemyTank> enemy = make_shared<EnemyTank>();
+		enemy->GetCollider()->GetTransform()->SetPos(Vector2(-16.0f, 16.0f));
+		_tanks.push_back(enemy);
+	}
+
+	Load_B();
+	Load_C();
 }
 
 void Stage1::CreateTank()
@@ -158,7 +165,7 @@ void Stage1::Load_B()
 
 	void* ptr = temp.data();
 	reader.Byte(&ptr, sizeof(Vector2) * size);
-
+	_bricks.clear();
 	for (int i = 0; i < temp.size(); i++)
 	{
 		shared_ptr<Brick> brick = make_shared<Brick>();
@@ -177,13 +184,20 @@ void Stage1::Load_C()
 
 	void* ptr = temp.data();
 	reader.Byte(&ptr, sizeof(Vector2) * size);
-
+	_concretes.clear();
 	for (int i = 0; i < temp.size(); i++)
 	{
 		shared_ptr<Concrete> concrete = make_shared<Concrete>();
 		concrete->GetQuad()->GetTransform()->SetPos(temp[i]);
 		_concretes.push_back(concrete);
 	}
+}
+
+void Stage1::Load_E()
+{
+	BinaryReader reader = BinaryReader(L"Save/E.max");
+	int max = reader.Int();
+	_max = max;
 }
 
 bool Stage1::GameEnd()
