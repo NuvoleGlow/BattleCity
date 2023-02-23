@@ -18,6 +18,7 @@ Timer::~Timer()
 void Timer::Update()
 {
 	QueryPerformanceCounter((LARGE_INTEGER*)&_curTime);
+	_timeElased = (double)(_curTime - _lastTime) * _timeScale;
 
 	if (_lockFPS != 0)
 	{
@@ -26,10 +27,6 @@ void Timer::Update()
 			QueryPerformanceCounter((LARGE_INTEGER*)&_curTime);
 			_timeElased = (double)(_curTime - _lastTime) * _timeScale;
 		}
-	}
-	else
-	{
-		_timeElased = (double)(_curTime - _lastTime) * _timeScale;
 	}
 
 	_lastTime = _curTime;

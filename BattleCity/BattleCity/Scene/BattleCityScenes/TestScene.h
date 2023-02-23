@@ -20,12 +20,17 @@ public:
 
 	virtual void NextScene() override;
 
+	virtual void Init() override;
+
 	void Save_Score();
 	void Save_HP();
 
 	void Save_B();
 	void Save_C();
 	void Save_G();
+	void Load_B();
+	void Load_C();
+	void Load_G();
 	
 	bool debug = false;
 

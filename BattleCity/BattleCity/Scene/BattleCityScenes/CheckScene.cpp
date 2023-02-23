@@ -75,5 +75,9 @@ void CheckScene::Save_E()
 {
 	BinaryWriter writer = BinaryWriter(L"Save/E.max");
 
-	writer.Int((_stageCount + 1) * 5);
+	int number = (_stageCount + 1) * 5;
+	if (number >= 20)
+		number = 20;
+
+	writer.Int(number);
 }

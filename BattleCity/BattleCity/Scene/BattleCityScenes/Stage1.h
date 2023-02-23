@@ -22,8 +22,10 @@ public:
 
 	void CreateTank();
 
+	void Load_Score();
 	void Save_Score();
 	void Save_HP();
+	void Load_HP();
 	void Load_B();
 	void Load_C();
 	void Load_E();

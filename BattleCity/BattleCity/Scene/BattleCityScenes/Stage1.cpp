@@ -115,6 +115,8 @@ void Stage1::Init()
 	_headQuarter = make_shared<HeadQuarter>();
 	_player = make_shared<PlayerTank>();
 
+	Load_HP();
+	Load_Score();
 	Load_E();
 
 	_tanks.clear();
@@ -141,6 +143,13 @@ void Stage1::CreateTank()
 	_count += 1;
 }
 
+void Stage1::Load_Score()
+{
+	BinaryReader reader = BinaryReader(L"Save/HP.hp");
+	int hp = reader.Int();
+	_player->SetHP(hp);
+}
+
 void Stage1::Save_Score()
 {
 	BinaryWriter writer = BinaryWriter(L"Save/Score.sc");
@@ -153,6 +162,13 @@ void Stage1::Save_HP()
 	BinaryWriter writer = BinaryWriter(L"Save/HP.hp");
 
 	writer.Int(_player->GetHP());
+}
+
+void Stage1::Load_HP()
+{
+	BinaryReader reader = BinaryReader(L"Save/Score.sc");
+	int sc = reader.Int();
+	_backGround->AddScore(sc);
 }
 
 void Stage1::Load_B()

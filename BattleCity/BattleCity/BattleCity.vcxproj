@@ -282,6 +282,7 @@
     <Image Include="Resource\Texture\HeadQuarter.png" />
     <Image Include="Resource\Texture\HP.png" />
     <Image Include="Resource\Texture\PlayerTank.png" />
+    <Image Include="Resource\Texture\UI\Item.png" />
     <Image Include="Resource\Texture\UI\Numbers.png" />
     <Image Include="small.ico" />
   </ItemGroup>
@@ -376,7 +377,6 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\Hooter.mp3" />
-    <Media Include="Resource\Sound\The_Happy_Troll.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

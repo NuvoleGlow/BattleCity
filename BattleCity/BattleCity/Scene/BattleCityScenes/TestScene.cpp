@@ -12,51 +12,8 @@
 
 TestScene::TestScene()
 {
-	debug = true;
-
-	_backGround = make_shared<Frame>();
-	_headQuarter = make_shared<HeadQuarter>();
-
-	vector<Vector2> position_b;
-	vector<Vector2> position_c;
-	vector<Vector2> position_g;
-	
-	position_b.push_back(Vector2(216.0f, 40.0f));
-	position_b.push_back(Vector2(216.0f, 56.0f));
-	position_b.push_back(Vector2(216.0f, 72.0f));
-	
-	position_b.push_back(Vector2(264.0f, 40.0f));
-	position_b.push_back(Vector2(264.0f, 56.0f));
-	position_b.push_back(Vector2(264.0f, 72.0f));
-	
-	position_b.push_back(Vector2(232.0f, 72.0f));
-	position_b.push_back(Vector2(248.0f, 72.0f));
-
-	// ------------------------------
-
-	// ------------------------------
-
-	for (int i = 0; i < position_b.size(); i++)
-	{
-		shared_ptr<Brick> brick = make_shared<Brick>();
-		brick->GetQuad()->GetTransform()->SetPos(position_b[i]);
-		_bricks.push_back(brick);
-	}
-	for (int i = 0; i < position_c.size(); i++)
-	{
-		shared_ptr<Concrete> concrete = make_shared<Concrete>();
-		concrete->GetQuad()->GetTransform()->SetPos(position_c[i]);
-		_concretes.push_back(concrete);
-	}
-	for (int i = 0; i < position_g.size(); i++)
-	{
-		shared_ptr<Grass> grass = make_shared<Grass>();
-		grass->GetQuad()->GetTransform()->SetPos(position_g[i]);
-		_grasses.push_back(grass);
-	}
-
-	Save_Score();
-	Save_HP();
+	Timer::GetInstance()->SetLockFPS(60.0);
+	Init();
 }
 
 TestScene::~TestScene()
@@ -65,23 +22,10 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	if (KEY_PRESS('B'))
-	{
-		Save_B();
-	}
-	if (KEY_PRESS('C'))
-	{
-		Save_C();
-	}
-	if (KEY_PRESS('G'))
-	{
-		Save_G();
-	}
-	if (KEY_PRESS('N'))
+	if (KEY_UP(VK_SPACE))
 	{
 		NextScene();
 	}
-	
 
 	for (auto brick : _bricks)
 	{
@@ -123,10 +67,20 @@ void TestScene::Render()
 
 void TestScene::NextScene()
 {
-	if (debug == false)
-		return;
-
 	SCENE->ChangeScene(404);
+}
+
+void TestScene::Init()
+{
+	_backGround = make_shared<Frame>();
+	_headQuarter = make_shared<HeadQuarter>();
+
+	Load_B();
+	Load_C();
+	Load_G();
+
+	Save_Score();
+	Save_HP();
 }
 
 void TestScene::Save_Score()
@@ -148,7 +102,7 @@ void TestScene::Save_B()
 	if (debug == false)
 		return;
 	
-	BinaryWriter writer = BinaryWriter(L"Save/Stage3_B.map");
+	BinaryWriter writer = BinaryWriter(L"Save/Stage0_B.map");
 	
 	vector<Vector2> temp;
 	for (int i = 0; i < _bricks.size(); i++)
@@ -165,7 +119,7 @@ void TestScene::Save_C()
 	if (debug == false)
 		return;
 	
-	BinaryWriter writer = BinaryWriter(L"Save/Stage3_C.map");
+	BinaryWriter writer = BinaryWriter(L"Save/Stage0_C.map");
 	
 	vector<Vector2> temp;
 	for (int i = 0; i < _concretes.size(); i++)
@@ -182,7 +136,7 @@ void TestScene::Save_G()
 	if (debug == false)
 		return;
 
-	BinaryWriter writer = BinaryWriter(L"Save/Stage3_G.map");
+	BinaryWriter writer = BinaryWriter(L"Save/Stage0_G.map");
 
 	vector<Vector2> temp;
 	for (int i = 0; i < _grasses.size(); i++)
@@ -192,4 +146,61 @@ void TestScene::Save_G()
 
 	writer.UInt(temp.size());
 	writer.Byte(temp.data(), sizeof(Vector2) * temp.size());
+}
+
+void TestScene::Load_B()
+{
+	BinaryReader reader = BinaryReader(L"Save/Stage0_B.map");
+
+	vector<Vector2> temp;
+	UINT size = reader.UInt();
+	temp.resize(size);
+
+	void* ptr = temp.data();
+	reader.Byte(&ptr, sizeof(Vector2) * size);
+	_bricks.clear();
+	for (int i = 0; i < temp.size(); i++)
+	{
+		shared_ptr<Brick> brick = make_shared<Brick>();
+		brick->GetQuad()->GetTransform()->SetPos(temp[i]);
+		_bricks.push_back(brick);
+	}
+}
+
+void TestScene::Load_C()
+{
+	BinaryReader reader = BinaryReader(L"Save/Stage0_C.map");
+
+	vector<Vector2> temp;
+	UINT size = reader.UInt();
+	temp.resize(size);
+
+	void* ptr = temp.data();
+	reader.Byte(&ptr, sizeof(Vector2) * size);
+	_concretes.clear();
+	for (int i = 0; i < temp.size(); i++)
+	{
+		shared_ptr<Concrete> concrete = make_shared<Concrete>();
+		concrete->GetQuad()->GetTransform()->SetPos(temp[i]);
+		_concretes.push_back(concrete);
+	}
+}
+
+void TestScene::Load_G()
+{
+	BinaryReader reader = BinaryReader(L"Save/Stage0_G.map");
+
+	vector<Vector2> temp;
+	UINT size = reader.UInt();
+	temp.resize(size);
+
+	void* ptr = temp.data();
+	reader.Byte(&ptr, sizeof(Vector2) * size);
+	_grasses.clear();
+	for (int i = 0; i < temp.size(); i++)
+	{
+		shared_ptr<Grass> grass = make_shared<Grass>();
+		grass->GetQuad()->GetTransform()->SetPos(temp[i]);
+		_grasses.push_back(grass);
+	}
 }
